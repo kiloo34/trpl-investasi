@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'nama', 'email', 'password', 'role'
+        'name', 'email', 'password', 'status', 'role'
     ];
 
     /**
@@ -28,14 +28,9 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function investor()
+    public function member()
     {
-        return $this->hasOne('App\Investor', 'id_user');
-    }
-
-    public function peternak()
-    {
-        return $this->hasOne('App\Peternak', 'id_user');
+        return $this->hasOne('App\Member', 'id_user');
     }
 
 }
