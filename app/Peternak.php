@@ -31,19 +31,4 @@ class Peternak extends Model
     return $this->hasOne('App\User', 'id_user');
   }
 
-  public function scopeSelectMode($q)
-  {
-    // $data = [];
-    // $data[] = [
-    // 	'text'=>'Pilih Member',
-    // 	'value'=>''
-    // ];
-    // foreach ($q->get() as $d) {
-    // 	$data[] = [
-    // 		'text'=>$d->nama_ktp,
-    // 		'value'=>$d->id,
-    // 	];
-    // }
-    // return $data;
-  }
 }

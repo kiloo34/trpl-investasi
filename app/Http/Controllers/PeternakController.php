@@ -113,41 +113,36 @@ class PeternakController extends Controller
     public function update(Request $request, $id)
     {
 
-      $user = User::findOrFail($id);
-      $user->nama = $request->nama;
+        // dd($request);
 
-      $user->save();
+        $user = User::findOrFail($id);
+        $user->nama = $request->nama;
 
-      $peternak = Peternak::where('id_user',Auth::user()->id);
+        $user->save();
 
+        dd($request);
 
-      $request->except ('_token');
-      $request->except ('_method');
+        $peternak = Peternak::where('id_user',Auth::user()->id);
+        $peternak->alamat = $request->alamat;
+        $peternak->provinsi = $request->provinsi;
+        $peternak->kabupaten = $request->kabupaten;
+        $peternak->kecamatan = $request->kecamatan;
+        $peternak->kelurahan = $request->kelurahan;
+        $peternak->foto_kandang = $request->foto_kandang;
+        $peternak->foto_ktp = $request->foto_ktp;
+        $peternak->foto_profil = $request->foto_profil;
+        $peternak->jenis_kelamin = $request->jenis_kelamin;
+        $peternak->no_ktp = $request->no_ktp;
+        $peternak->no_telp = $request->no_telp;
+        $peternak->tgl_lahir = $request->tgl_lahir;
 
-      $peternak->first();
-      return back();
-      
-      // return redirect()->view('peternak.index')->with('message', 'Data Peternak berhasil Diperbarui');
+        $peternak->save();
 
-      // dd($request->all());
-      // $request->validate([
-      //   'nama' => 'required|max:255',
-      //   'no_telp' => 'required|max:255',
-      //   'tgl_lahir' => 'required|max:255'
-      // ]);
-      //
-      // dd('masuk');
-      //
-      // $user = User::find($id);
-      // $user->nama = $request->nama;
-      // $user->save();
-      //
-      // $peternak = Peternak::where('id_user',Auth::user()->id);
-      // $peternak->no_telp = $request->no_telp;
-      // $peternak->tgl_lahir = $request->tgl_lahir;
-      // $peternak->save();
-      //
-      // return redirect()->view('peternak.index')->with('message', 'Data Peternak berhasil Diperbarui');
+        $request->except ('_token');
+        $request->except ('_method');
+
+        $peternak->first();
+        return back();
     }
 
     /**

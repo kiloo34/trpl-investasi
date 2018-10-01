@@ -94,20 +94,21 @@ class InvestorController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $request->validate([
-        'nama' => 'required|String|max:255',
-        'email' => 'required|String|email|max:255|unique:users',
-        'password' => 'required|String|min:6|confirmed',
-        'no_telp' => 'required|String|max:14'
-      ]);
 
-      $investor = Investor::find($id);
-      $investor->nama = $request->nama;
-      $investor->jenis_kelamin = $request->jenis_kelamin;
-      $investor->no_telp = $request->no_telp;
+        // dd($request->all());
 
-      $blog->save();
-      return redirect('investor.index')->with('message', 'Data Investor Berhasil Diperbarui');
+        $user = User::findOrFail($id);
+        $user->nama = $request->nama;
+
+        $user->save();
+
+        $investor = Investor::where('id_user', Auth::user()->id)->first();
+        $investor->jenis_kelamin = $request->jenis_kelamin;
+        $investor->no_telp = $request->no_telp;
+
+        $investor->save();
+
+        return back()->with('success','Profil Telah Diperbarui');
     }
 
     /**

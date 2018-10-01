@@ -1,5 +1,7 @@
 @extends('profil.index')
-@section('title', 'Profil Peternak')
+
+@section('tittle', 'Profil Peternak')
+
 @include('navbar')
 
 @section('content')

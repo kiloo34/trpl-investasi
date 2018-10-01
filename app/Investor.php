@@ -17,7 +17,7 @@ class Investor extends Model
   public $tabletimestamp = false;
 
   public function user(){
-    return $this->hasOne('App\User');
+    return $this->hasOne('App\User', 'id_user');
   }
 
 }

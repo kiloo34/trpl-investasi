@@ -32,7 +32,7 @@
     background-attachment: fixed;
     position: relative;
     background-image: url("{{asset('image/navbar/back (1).png')}}");
-    background-color: rgb(184, 117, 68);
+    background-color: #592d00;
   }
   </style>
 
