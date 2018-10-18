@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->enum('status',[
               'aktif', 'belum aktif', 'banned',
-            ])->default('belum aktif');
+            ]);
             $table->enum('role', [
               'admin', 'investor', 'peternak'
             ]);
@@ -37,6 +37,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('user');
     }
 }

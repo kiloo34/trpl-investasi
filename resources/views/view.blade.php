@@ -1,28 +1,26 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title> Ngoter - @yield('title') </title>
 
     <link rel="shortcut icon" href="{{ asset('image/favicon.png') }}">
     <link href="/css/app.css" rel="stylesheet">
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
 
-    <link rel="shortcut icon" href="{{ asset('image/favicon.png') }}">
+</head>
+<body>
 
-  </head>
-  <body>
-    @include('navbar')
+    @yield('content')
 
-    <main class="py-4">
-      @yield('content')
-    </main>
-
+    <br>
     @include('footer')
 
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-  </body>
+</body>
 </html>
+

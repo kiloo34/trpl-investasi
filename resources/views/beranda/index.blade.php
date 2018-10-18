@@ -1,6 +1,7 @@
 @extends('view')
 
 @section('title', 'Beranda')
+@include('navbar')
 @include('header')
 
 @section('content')

@@ -15,22 +15,28 @@
         <!-- Page Heading/Breadcrumbs -->
         <h1 class="mt-4 mb-3">Halaman Profil</h1>
 
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="index.html">Home</a>
-          </li>
-          <li class="breadcrumb-item active">Profil</li>
-        </ol>
-
         <!-- Content Row -->
         <div class="row">
           <!-- Sidebar Column -->
-          <div class="col-lg-3 col-md-6 col-sm-3">
-            <div class="list-group">
-              <a href="/profil" class="list-group-item">Profil</a>
-              <a href="#" class="list-group-item">My Investment</a>
-            </div>
-          </div>
+            @if (Auth::check())
+                @if (Auth::user()->role=='investor')
+                    <div class="col-lg-3 col-md-6 col-sm-3">
+                        <div class="list-group">
+                            <a href="/profil" class="list-group-item">Profil</a>
+                            <a href="#" class="list-group-item">My Investment</a>
+                        </div>
+                    </div>
+                @else
+                    <div class="col-lg-3 col-md-6 col-sm-3">
+                        <div class="list-group">
+                            <a href="/profil" class="list-group-item">Profil</a>
+                            <a href="#" class="list-group-item">Produk</a>
+                        </div>
+                    </div>
+
+                @endif
+            @endif
+
           <!-- Content Column -->
 
           <div class="col-lg-9 col-md-6 col-sm-3 ">
@@ -72,8 +78,7 @@
                   <div class="form-group row">
                     <label for="foto_profil" class="col-lg-3 col-form-label"></label>
                     <div class="col-lg-9 col-md-6 col-sm-3">
-                      {{-- <input type="judul" readonly name="foto_profil" class="form-control-plaintext" id="staticEmail" value="{{ old('foto_profil') ? old('foto_profil') : $peternak->foto_ktp}}" placeholder="foto_ktp"> --}}
-                      <img src="{{ old('foto_profil') ? old('foto_profil') : $peternak->foto_ktp}}" alt="..." class="img-rounded">
+                      <img src="{{ $peternak->foto_profil }}" class="img-responsive" alt="Cinque Terre" width="304" height="236">
                     </div>
                   </div>
 
@@ -122,14 +127,14 @@
                   <div class="form-group row">
                     <label for="foto_kandang" class="col-lg-3 col-form-label">Foto Kandang</label>
                     <div class="col-lg-9 col-md-6 col-sm-3">
-                      <input type="judul" readonly name="foto_kandang" class="form-control-plaintext" id="staticEmail" value="{{ old('foto_kandang') ? old('foto_kandang') : $peternak->foto_kandang}}" placeholder="foto_kandang">
+                        <img src="{{ $peternak->foto_kandang }}" class="img-responsive" alt="Cinque Terre" width="304" height="236">
                     </div>
                   </div>
 
                   <div class="form-group row">
                     <label for="foto_ktp" class="col-lg-3 col-form-label">Foto KTP</label>
                     <div class="col-lg-9 col-md-6 col-sm-3">
-                      <input type="judul" readonly name="foto_ktp" class="form-control-plaintext" id="staticEmail" value="{{ old('foto_ktp') ? old('foto_ktp') : $peternak->foto_ktp}}" placeholder="foto_ktp">
+                        <img src="{{ $peternak->foto_ktp }}" class="img-responsive" alt="Cinque Terre" width="304" height="236">
                     </div>
                   </div>
 
@@ -246,82 +251,82 @@
                         </div>
                         <div class="modal-body">
                           <div class="container-fluid">
-                            <form action="/peternak/{{Auth::user()->id}}/edit" method="post">
-                              {{csrf_field()}}
-                              <div class="form-group">
-                                <label for="nama" class="col-md-3 col-form-label">Nama</label>
-                                <input type="text" name="nama" class="form-control" value="{{ old('nama') ? old('nama') : Auth::user()->nama}}">
-                              </div>
+                            <form action="/peternak/{{Auth::user()->id}}/edit" method="post" enctype="multipart/form-data">
+                                {{ csrf_field() }}
+                                <div class="form-group">
+                                    <label for="nama" class="col-md-3 col-form-label">Nama</label>
+                                    <input type="text" name="nama" class="form-control" value="{{ old('nama') ? old('nama') : Auth::user()->nama}}">
+                                </div>
 
-                              <div class="form-group">
-                                <label for="alamat" class="col-md-3 col-form-label">Alamat</label>
-                                <input type="text" class="form-control" id="alamat" value="{{ old('alamat') ? old('alamat') : $peternak->alamat}}">
-                              </div>
+                                <div class="form-group">
+                                    <label for="alamat" class="col-md-3 col-form-label">Alamat</label>
+                                    <input type="text" name="alamat" class="form-control" value="{{ old('alamat') ? old('alamat') : $peternak->alamat}}">
+                                </div>
 
-                              <div class="form-group">
-                                <label for="provinsi" class="col-md-3 col-form-label">Provinsi</label>
-                                <input type="text" class="form-control" id="provinsi" value="{{ old('provinsi') ? old('provinsi') : $peternak->provinsi}}">
-                              </div>
+                                <div class="form-group">
+                                    <label for="provinsi" class="col-md-3 col-form-label">Provinsi</label>
+                                    <input type="text" name="provinsi" class="form-control" value="{{ old('provinsi') ? old('provinsi') : $peternak->provinsi}}">
+                                </div>
 
-                              <div class="form-group">
-                                <label for="kabupaten" class="col-md-3 col-form-label">Kabupaten</label>
-                                <input type="text" class="form-control" id="kabupaten" value="{{ old('kabupaten') ? old('kabupaten') : $peternak->kabupaten}}">
-                              </div>
+                                <div class="form-group">
+                                    <label for="kabupaten" class="col-md-3 col-form-label">Kabupaten</label>
+                                    <input type="text" name="kabupaten" class="form-control" value="{{ old('kabupaten') ? old('kabupaten') : $peternak->kabupaten}}">
+                                </div>
 
-                              <div class="form-group">
-                                <label for="kecamatan" class="col-md-3 col-form-label">Kecamatan</label>
-                                <input type="text" class="form-control" id="kecamatan" value="{{ old('kecamatan') ? old('kecamatan') : $peternak->kecamatan}}">
-                              </div>
+                                <div class="form-group">
+                                    <label for="kecamatan" class="col-md-3 col-form-label">Kecamatan</label>
+                                    <input type="text" name="kecamatan" class="form-control" value="{{ old('kecamatan') ? old('kecamatan') : $peternak->kecamatan}}">
+                                </div>
 
-                              <div class="form-group">
-                                <label for="kelurahan" class="col-md-3 col-form-label">Kelurahan</label>
-                                <input type="text" class="form-control" id="kelurahan" value="{{ old('kelurahan') ? old('kelurahan') : $peternak->kelurahan}}">
-                              </div>
+                                <div class="form-group">
+                                    <label for="kelurahan" class="col-md-3 col-form-label">Kelurahan</label>
+                                    <input type="text" name="kelurahan" class="form-control" value="{{ old('kelurahan') ? old('kelurahan') : $peternak->kelurahan}}">
+                                </div>
 
-                              <div class="form-group">
-                                <label for="foto_kandang" class="col-md-3 col-form-label">Foto Kandang</label>
-                                <input type="text" class="form-control" id="foto_kandang" value="{{ old('foto_kandang') ? old('foto_kandang') : $peternak->foto_kandang}}">
-                              </div>
+                                <div class="form-group">
+                                    <label for="foto_kandang" class="col-lg-8 col-form-label text-md-right">{{ __('Foto Kandang') }}</label>
+                                    <input type="file" name="foto_kandang" class="form-control" value="{{ old('foto_kandang') ? old('foto_kandang') : $peternak->foto_kandang}}">
+                                </div>
 
-                              <div class="form-group">
-                                <label for="foto_ktp" class="col-md-3 col-form-label">Foto KTP</label>
-                                <input type="text" class="form-control" id="foto_ktp" value="{{ old('foto_ktp') ? old('foto_ktp') : $peternak->foto_ktp}}">
-                              </div>
+                                <div class="form-group">
+                                    <label for="foto_ktp" class="col-lg-8 col-form-label text-md-right">{{ __('Foto KTP') }}</label>
+                                    <input type="file" name="foto_ktp" class="form-control" value="{{ old('foto_ktp') ? old('foto_ktp') : $peternak->foto_ktp}}">
+                                </div>
 
-                              <div class="form-group">
-                                <label for="foto_profil" class="col-md-3 col-form-label">Foto Profil</label>
-                                <input type="text" class="form-control" id="foto_profil" value="{{ old('foto_profil') ? old('foto_profil') : $peternak->foto_profil}}">
-                              </div>
+                                <div class="form-group">
+                                    <label for="foto_profil" class="col-lg-8 col-form-label text-md-right">{{ __('Foto Profil') }}</label>
+                                    <input type="file" name="foto_profil" class="form-control" value="{{ old('foto_profil') ? old('foto_profil') : $peternak->foto_profil}}">
+                                </div>
 
-                              <div class="form-group">
-                                <label for="jenis_kelamin" class="col-md-3 col-form-label">Jenis Kelamin</label>
-                                  <select class="form-control" name="jenis_kelamin">
-                                      <option selected >{{ old('jenis_kelamin') ? old('jenis_kelamin') : $peternak->jenis_kelamin}}</option>
-                                      <option value="Perempuan">Perempuan</option>
-                                      <option value="Laki-Laki">Laki-Laki</option>
-                                  </select>
-                              </div>
+                                <div class="form-group">
+                                    <label for="jenis_kelamin" class="col-md-3 col-form-label">Jenis Kelamin</label>
+                                    <select class="form-control" name="jenis_kelamin">
+                                        <option selected >{{ old('jenis_kelamin') ? old('jenis_kelamin') : $peternak->jenis_kelamin}}</option>
+                                        <option value="Perempuan">Perempuan</option>
+                                        <option value="Laki-Laki">Laki-Laki</option>
+                                    </select>
+                                </div>
 
-                              <div class="form-group">
-                                <label for="no_ktp" class="col-md-3 col-form-label">Nomor KTP</label>
-                                  <input type="text" class="form-control" id="no_ktp" value="{{ old('no_ktp') ? old('no_ktp') : $peternak->no_ktp}}">
-                              </div>
+                                <div class="form-group">
+                                    <label for="no_ktp" class="col-md-3 col-form-label">Nomor KTP</label>
+                                    <input type="text" name="no_ktp" class="form-control" value="{{ old('no_ktp') ? old('no_ktp') : $peternak->no_ktp}}">
+                                </div>
 
-                              <div class="form-group">
-                                <label for="no_telp" class="col-md-3 col-form-label">Nomor Telephone</label>
-                                  <input type="text" class="form-control" id="no_telp" value="{{ old('no_telp') ? old('no_telp') : $peternak->no_telp}}">
-                              </div>
+                                <div class="form-group">
+                                    <label for="no_telp" class="col-md-3 col-form-label">Nomor Telephone</label>
+                                    <input type="text" name="no_telp" class="form-control" value="{{ old('no_telp') ? old('no_telp') : $peternak->no_telp}}">
+                                </div>
 
-                              <div class="form-group">
-                                <label for="tgl_lahir" class="col-md-3 col-form-label">Tanggal Lahir</label>
-                                  <input type="date" class="form-control" id="tgl_lahir" value="{{ old('tgl_lahir') ? old('tgl_lahir') : $peternak->tgl_lahir}}">
-                              </div>
+                                <div class="form-group">
+                                    <label for="tgl_lahir" class="col-md-3 col-form-label">Tanggal Lahir</label>
+                                    <input type="date" name="tgl_lahir" class="form-control" value="{{ old('tgl_lahir') ? old('tgl_lahir') : $peternak->tgl_lahir}}">
+                                </div>
 
-                              <input type="hidden" name="_method" value="PUT">
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save changes</button>
-                              </div>
+                                <input type="hidden" name="_method" value="PUT">
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
                             </form>
                           </div>
                         </div>

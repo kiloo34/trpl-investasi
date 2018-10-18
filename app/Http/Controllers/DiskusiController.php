@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Diskusi;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class DiskusiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('beranda.index');
+        //
     }
 
     /**
@@ -32,9 +33,14 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        //
+        $this->validate($request, ['body' => 'required,']);
+
+        $diskusi = $request->user()->diskusi()->create([
+            'body'      => $request->json('body'),
+            'id_produk' => $id
+        ]);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Investor;
+use App\Produk;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -17,10 +18,34 @@ class InvestorController extends Controller
      */
     public function index()
     {
-      // dd(investor::where(''));
-        $investor = investor::where('id_user',Auth::user()->id)->first();
-        // dd($investor);
-        return view('investor.index', compact('investor'));
+        if (Auth::check()) {
+            if (Auth::user()->role=='investor') {
+                $investor = investor::where('id_user', Auth::user()->id)->first();
+                return view('investor.index', compact('investor'));
+            } else {
+                abort(404);
+            }
+        } else {
+            return view('beranda.index');
+        }
+    }
+
+    public function pantau(){
+        if (Auth::check()) {
+            if (Auth::user()->role=='investor') {
+                $investor = investor::where('id_user', Auth::user()->id)->first();
+                return view('produk.pantau', compact('produk'));
+            } else {
+                abort(404);
+            }
+        } else {
+            abort(404);
+        }
+    }
+
+    public function produk(){
+        $produk = Produk::all();
+        return view('produk.index', ['produk' => $produk]);
     }
 
     /**
@@ -41,26 +66,29 @@ class InvestorController extends Controller
      */
     public function store(Request $request)
     {
+        // dd('masuk sini');
+
         $request->validate([
-          'nama' => 'required|String|max:255',
-          'email' => 'required|String|email|max:255|unique:users',
-          'password' => 'required|String|min:6|confirmed',
-          'jenis_kelamin' => 'required|String',
-          'no_telp' => 'required|String|max:14'
+        'nama' => 'required|String|max:255',
+        'email' => 'required|String|email|max:255|unique:users',
+        'password' => 'required|String|min:6|confirmed',
+        'jenis_kelamin' => 'required|String',
+        'no_telp' => 'required|String|max:14'
         ]);
 
-      $user=User::create([
-        'nama' => $request->nama,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-        'role' => 'investor',
-      ]);
+        $user=User::create([
+            'nama' => $request->nama,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'status' => 'aktif',
+            'role' => 'investor',
+        ]);
 
-      Investor::create([
-        'no_telp' => $request->no_telp,
-        'id_user' => $user->id,
-      ]);
-      return redirect()->route('investor.index')->with('message', 'Data Investor Berhasil dibuat');
+        Investor::create([
+            'no_telp' => $request->no_telp,
+            'id_user' => $user->id,
+        ]);
+        return redirect()->route('investor.index')->with('message', 'Data Investor Berhasil dibuat');
     }
 
     /**
