@@ -7,6 +7,7 @@ use App\Investor;
 use App\Peternak;
 use App\Produk;
 use App\Pesanan;
+use App\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -97,16 +98,19 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Produk $produk)
     {
-        //
+        // dd('masuk');
+        $produk->delete();
+        return redirect()->route('admin.produk')->with('success_msg', 'berhasil dihapus');
     }
 
-    public function verifikasi(Request $r, Peternak $peternak)
+    public function verifikasi(Request $r, User $user)
     {
-        $peternak->user()->update([
+        $user->update([
             'status'=>'aktif',
         ]);
+        // dd('1');
         return redirect()->back()->with('success_msg','Peternak berhasil diverifikasi');
     }
 

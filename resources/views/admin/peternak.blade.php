@@ -41,10 +41,10 @@
                         </td>
                         <td>
                             @if ($p->user->status == 'belum aktif')
-                                <a href="peternak/verifikasi/{peternak}" class="btn btn-flat btn-primary btn-sm">Verifikasi</a>
+                                <a href="{{ route('peternak.verifikasi', $p->user->id) }}" class="btn btn-flat btn-primary btn-sm">Verifikasi</a>
                             @endif
                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#btn-detail" data-whatever="@fat"> <i class="fa fa-search"></i> Detail</button>
-                            {{-- <a href="users/verifikasi/{peternak}" class="btn btn-flat btn-primary">Verifikasi</a> --}}
+                            {{-- <a href="users/verifikasi/{peternak}" class="btn btn-flat btn-primary ">Verifikasi</a> --}}
                         </td>
                     </tr>
                 @endforeach

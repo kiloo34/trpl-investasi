@@ -23,7 +23,7 @@
                         <td> {{ $p->stock }} </td>
                         <td>
                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#btn-detail" data-whatever="@fat"> <i class="fa fa-search"></i> Detail</button>
-                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#btn-hapus" data-whatever="@fat"><i class="fa fa-trash"></i> Delete</button>
+                            <a href="{{route ('produk.destroy', $p->id) }}" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a>
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Open modal for @getbootstrap</button>
                         </td>
                     </tr>

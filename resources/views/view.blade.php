@@ -10,6 +10,9 @@
     <link rel="shortcut icon" href="{{ asset('image/favicon.png') }}">
     <link href="/css/app.css" rel="stylesheet">
 
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+    <script>tinymce.init({ selector:'textarea' });</script>
+
 </head>
 <body>
 

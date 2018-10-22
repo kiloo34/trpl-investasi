@@ -17,10 +17,15 @@ class HarusAktif
     public function handle($request, Closure $next)
     {
         // dd('masuk');
-        if($request->user()->status == "aktif"){
-            return $next($request);
+        if (Auth::check()) {
+            if($request->user()->status == "aktif"){
+                return $next($request);
+            }
+            Auth::logout();
+            return redirect('login')->with('msg','kentut');
+        } else {
+            return view('/');
         }
-        Auth::logout();
-        return redirect('login')->with('msg','kentut');
+
     }
 }

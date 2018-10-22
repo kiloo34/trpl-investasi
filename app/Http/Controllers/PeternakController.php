@@ -22,6 +22,7 @@ class PeternakController extends Controller
         if (Auth::check()) {
             if (Auth::user()->role=='peternak') {
                 $peternak = Peternak::where('id_user', Auth::user()->id)->first();
+                // dd($peternak);
                 return view('peternak.index', compact('peternak'));
             }  else {
                 abort(404);
@@ -154,7 +155,7 @@ class PeternakController extends Controller
 
         $user->save();
 
-        dd($request);
+        // dd($request);
 
         $f_p = $request->file('foto_profil')->store('public');
         $f_p = str_replace('public', '', $f_p);

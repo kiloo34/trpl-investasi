@@ -13,7 +13,7 @@
                         </div>
                         <div class="mr-5">{{ count($peternak) }} Peternak</div>
                     </div>
-                        <a class="card-footer text-white clearfix small z-1" href="admin/peternak">
+                        <a class="card-footer text-white clearfix small z-1" href="/peternak">
                             <span class="float-left">View Details</span>
                             <span class="float-right">
                                 <i class="fa fa-caret-right" aria-hidden="true"></i>
@@ -29,7 +29,7 @@
                         </div>
                         <div class="mr-5">{{ count($investor) }} Investor</div>
                     </div>
-                    <a class="card-footer text-white clearfix small z-1" href="#">
+                    <a class="card-footer text-white clearfix small z-1" href="/investor">
                         <span class="float-left">View Details</span>
                         <span class="float-right">
                             <i class="fa fa-caret-right" aria-hidden="true"></i>
@@ -45,7 +45,7 @@
                         </div>
                         <div class="mr-5">{{ count($pesanan) }} Pesanan</div>
                     </div>
-                    <a class="card-footer text-white clearfix small z-1" href="#">
+                    <a class="card-footer text-white clearfix small z-1" href="/pesanan">
                         <span class="float-left">View Details</span>
                         <span class="float-right">
                             <i class="fa fa-caret-right" aria-hidden="true"></i>
@@ -61,7 +61,7 @@
                         </div>
                         <div class="mr-5">{{ count($produk) }} Produk</div>
                     </div>
-                    <a class="card-footer text-white clearfix small z-1" href="#">
+                    <a class="card-footer text-white clearfix small z-1" href="/produk">
                         <span class="float-left">View Details</span>
                         <span class="float-right">
                             <i class="fa fa-caret-right" aria-hidden="true"></i>

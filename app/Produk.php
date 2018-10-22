@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Produk extends Model
@@ -19,7 +20,7 @@ class Produk extends Model
         'id_peternak',
     ];
 
-    public $tabletimestamp = false;
+    public $timestamp = false;
 
     public function peternak(){
         return $this->belongsTo('App\Peternak', 'id_peternak');

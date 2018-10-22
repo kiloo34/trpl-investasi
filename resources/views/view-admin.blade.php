@@ -132,13 +132,13 @@
         <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a href="/admin"><i class="fa fa-home" aria-hidden="true"></i> Dashboard</a>
-            <a href="admin/produk"><i class="fa fa-product-hunt" aria-hidden="true"></i> Produk</a>
+            <a href="/produk"><i class="fa fa-product-hunt" aria-hidden="true"></i> Produk</a>
             <button class="dropdown-btn">Member<i class="fa fa-caret-down"></i> </button>
             <div class="dropdown-container">
-                <a href="admin/investor">
+                <a href="/investor">
                     <i class="fa fa-user" aria-hidden="true"></i>
                     Investor</a>
-                <a href="admin/peternak">
+                <a href="/peternak">
                     <i class="fa fa-user" aria-hidden="true"></i>
                     Peternak</a>
             </div>
@@ -156,8 +156,7 @@
     </div>
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{{ asset('js/app.js') }}" > </script>
     <script>
     function openNav() {
         document.getElementById("mySidenav").style.width = "250px";
@@ -186,7 +185,7 @@
         });
         }
     </script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 
 </body>
 </html>

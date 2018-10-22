@@ -66,6 +66,8 @@
                                         </div>
                                         <a href="#" class="btn btn-primary btn-sm">Order</a>
                                     <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#btn-detail-{{$p->id}}" data-whatever="@fat">Detail</button>
+                                    {{-- <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#btn-detail-{{$p->id}}" data-whatever="@fat">Detail</button> --}}
+                                    <a href="/diskusi/{{$p->id}}" class="btn btn-info btn-sm" data-target=""> Komentar </a>
                                     </div>
                                 </div>
                             <!--/.Card-->
@@ -84,7 +86,7 @@
                                             <div class="form-group row">
                                                 <label for="email" class="col-lg-3 col-form-label">Foto Produk</label>
                                                 <div class="col-lg-9 col-md-6 col-sm-3">
-                                                    <img src="{{ old('nama_produk') ? old('nama_produk') : $p->foto_produk }}" class="img-responsive" alt="Cinque Terre" width="304" height="236">
+                                                    <img src="{{ old('foto_produk') ? old('foto_produk') : $p->foto_produk }}" class="img-responsive" alt="Cinque Terre" width="304" height="236">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -106,9 +108,34 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="email" class="col-lg-3 col-form-label">Peternak</label>
+                                                <label for="nama" class="col-lg-3 col-form-label">Peternak</label>
                                                 <div class="col-lg-9 col-md-6 col-sm-3">
-                                                    <input type="judul" readonly class="form-control-plaintext" id="staticEmail" value="{{ old('foto_produk') ? old('foto_produk') : $p->id_peternak}}">
+                                                    <input type="judul" readonly class="form-control-plaintext" id="static" value="{{ old('id_peternak') ? old('id_peternak') : $p->id_peternak}}">
+                                                </div>
+                                            </div>
+                                            <div id="accordion">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <a class="card-link" data-toggle="collapse" href="#collapseOne">Peternak</a>
+                                                    </div>
+                                                    <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                                        <label for="nama" style="padding: 7px; display: inline-block; width: 30%; margin: 0;">Nama</label>
+                                                        <div style="display: inline-block;width: 70%;float: right;">
+                                                            <input type="judul" readonly class="form-control-plaintext" id="static" value="{{ old('nama') ? old('nama') : $p->peternak->user->nama}}">
+                                                        </div>
+                                                        <label for="alamat" style="padding: 7px; display: inline-block; width: 30%; margin: 0;">alamat</label>
+                                                        <div style="display: inline-block;width: 70%;float: right;">
+                                                            <input type="judul" readonly class="form-control-plaintext" id="static" value="{{ old('alamat') ? old('alamat') : $p->peternak->alamat}}">
+                                                        </div>
+                                                        <label for="nama" style="padding: 7px; display: inline-block; width: 30%; margin: 0;">Foto Profi    l</label>
+                                                        <div style="display: inline-block;width: 70%;float: right;">
+                                                            <input type="judul" readonly class="form-control-plaintext" id="static" value="{{ old('nama') ? old('nama') : $p->peternak->foto_profil}}">
+                                                        </div>
+                                                        <label for="nama" style="padding: 7px; display: inline-block; width: 30%; margin: 0;">Foto KTP</label>
+                                                        <div style="display: inline-block;width: 70%;float: right;">
+                                                            <input type="judul" readonly class="form-control-plaintext" id="static" value="{{ old('nama') ? old('nama') : $p->peternak->foto_ktp}}">
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -146,10 +173,10 @@
                                             <td> {{ $p->deskripsi }} </td>
                                             <td>
                                                 <div class="btn-group">
-                                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#btn-detail" data-whatever="@fat">Detail</button>
+                                                    <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#btn-detail" data-whatever="@fat">Detail</button>
                                                     <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#btn-ubah" data-whatever="@fat">Ubah</button>
                                                 </div>
-                                            </td>
+                                            </td>btn-primary
                                         </tr>
                                     @endforeach
                                 </tbody>
