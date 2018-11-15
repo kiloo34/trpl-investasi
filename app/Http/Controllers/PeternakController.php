@@ -206,7 +206,8 @@ class PeternakController extends Controller
     public function produk(){
         if (Auth::check()) {
             if (Auth::user()->role=='peternak') {
-                $produk = Produk::paginate(2);
+                $produk = Produk::with('diskusi')->paginate(2);
+                // dd($produk);
                 return view('produk.index', ['produk' => $produk]);
             } else {
                 abort(404);
@@ -215,8 +216,6 @@ class PeternakController extends Controller
     }
 
     public function tambah_produk(Request $request){
-
-        // dd($request->all());
 
         $request->validate([
             'foto_produk'       => 'required',
@@ -231,8 +230,6 @@ class PeternakController extends Controller
             'term'              => 'required|String',
         ]);
 
-
-
         $f_produk = $request->file('foto_produk')->store('public');
         $f_produk = str_replace('public', '', $f_produk);
         $f_produk = str_replace('\\', '/', $f_produk);
@@ -245,9 +242,6 @@ class PeternakController extends Controller
             'term' => $request->term,
         ]);
 
-        // dd(Peternak::where('id_user',$request->user()->id)->first()->id);
-        // dd($request->user()->peternak->id);
-
         $produk = Produk::create([
             'foto_produk' => $f_produk,
             'nama_produk' => $request->nama_produk,
@@ -255,7 +249,7 @@ class PeternakController extends Controller
             'periode' => $request->periode,
             'stock' => $request->stock,
             'deskripsi' => $request->deskripsi,
-            // dd($request),
+
             'id_peternak' => Peternak::where('id_user',$request->user()->id)->first()->id,
             'id_kontrak' => $kontrak->id,
         ]);
@@ -265,6 +259,31 @@ class PeternakController extends Controller
 
     public function update_produk(Request $request, $id){
 
+
+        $produk = Produk::where('id', $id)->first();
+
+        $f_produk = $request->file('foto_produk')->store('public');
+        $f_produk = str_replace('public', '', $f_produk);
+        $f_produk = str_replace('\\', '/', $f_produk);
+        $f_produk = asset('storage'.$f_produk);
+
+        $kontrak = Kontrak::where('id', $produk->id_kontrak)->first();
+        $kontrak->profilResiko = $request->profilResiko;
+        $kontrak->rencanaPengelolaan = $request->rencanaPengelolaan;
+        $kontrak->struktur = $request->struktur;
+        $kontrak->term = $request->term;
+        $kontrak->save();
+
+        $produk = Produk::where('id', $produk->id)->first();
+        $produk->foto_produk = $f_produk;
+        $produk->nama_produk = $request->nama_produk;
+        $produk->harga = $request->harga;
+        $produk->periode = $request->periode;
+        $produk->stock = $request->stock;
+        $produk->deskripsi = $request->deskripsi;
+
+        $produk->save();
+        return back()->with('msg_succes', 'Produk Telah Diperbarui');
     }
 
 }

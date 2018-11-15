@@ -1,6 +1,6 @@
 @extends('view-admin')
 
-@section('title', 'Admin')
+@section('title', 'Dashboard')
 
 @section('content')
     <div class="container-fluid">
@@ -76,7 +76,7 @@
                 <i class="fas fa-chart-area"></i>
                 Perubahan Harga</div>
             <div class="card-body">
-                <canvas id="myAreaChart" width="100%" height="30"></canvas>
+                <canvas id="myAreaChart" width="100%" height="30px"></canvas>
             </div>
             <div class="card-footer small text-muted"></div>
         </div>

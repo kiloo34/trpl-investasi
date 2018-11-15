@@ -9,7 +9,7 @@ class Diskusi extends Model
     protected $table = 'diskusi';
 
     public $fillable = [
-        'judul', 'body', 'id_user',
+        'judul', 'body', 'id_user', 'id_produk'
     ];
 
     public $timestamps = 'true';
@@ -22,7 +22,14 @@ class Diskusi extends Model
         return $this->belongsTo('App\User', 'id_user');
     }
 
-    public function replies(){
-        return $this->hasMany(Comment::class, 'parent_id');
+    public function balas()
+    {
+        return $this->hasMany('App\Balas', 'id_diskusi');
     }
+
+    public function notifikasi()
+    {
+        return $this->hasMany('App\Notifikasi', 'id_diskusi');
+    }
+
 }

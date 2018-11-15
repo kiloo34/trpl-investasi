@@ -18,7 +18,7 @@ class Kontrak extends Model
     public $tabletimestamp = false;
 
     public function produk(){
-        return $this->belongsTo('App\Produk', 'id_produk');
+        return $this->hasOne('App\Produk', 'id_kontrak');
     }
 
 }

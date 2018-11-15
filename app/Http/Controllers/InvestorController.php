@@ -21,7 +21,9 @@ class InvestorController extends Controller
         if (Auth::check()) {
             if (Auth::user()->role=='investor') {
                 $investor = investor::where('id_user', Auth::user()->id)->first();
-                return view('investor.index', compact('investor'));
+                return view('investor.index', [
+                    'investor'  => $investor,
+                ]);
             } else {
                 abort(404);
             }
@@ -46,6 +48,14 @@ class InvestorController extends Controller
     public function produk(){
         $produk = Produk::all();
         return view('produk.index', ['produk' => $produk]);
+    }
+
+    public function akun_bank()
+    {
+        $bank = Bank::all();
+        return view('investor.akunBank', [
+            'bank'  => $bank
+        ]);
     }
 
     /**
@@ -131,6 +141,7 @@ class InvestorController extends Controller
         $user->save();
 
         $investor = Investor::where('id_user', Auth::user()->id)->first();
+        $investor->no_ktp = $request->no_ktp;
         $investor->jenis_kelamin = $request->jenis_kelamin;
         $investor->no_telp = $request->no_telp;
 

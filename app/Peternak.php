@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Peternak extends Model
 {
-
     protected $table = 'peternak';
 
     protected $fillable = [
@@ -22,6 +21,7 @@ class Peternak extends Model
         'no_telp',
         'no_ktp',
         'tgl_lahir',
+        'id_akun_bank',
         'id_user'
     ];
 
@@ -29,6 +29,11 @@ class Peternak extends Model
 
     public function user(){
         return $this->belongsTo('App\User', 'id_user');
+    }
+
+    public function akun_bank()
+    {
+        return $this->belongsTo('App\AkunBank', 'id_akun_bank');
     }
 
     public function produk(){

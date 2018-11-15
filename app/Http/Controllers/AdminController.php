@@ -8,6 +8,7 @@ use App\Peternak;
 use App\Produk;
 use App\Pesanan;
 use App\User;
+use App\Bank;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -29,11 +30,13 @@ class AdminController extends Controller
         $investor = Investor::all();
         $produk = Produk::all();
         $pesanan = Pesanan::all();
+        $bank = Bank::all();
         return view('admin.index', [
             'peternak'=> $peternak,
             'investor' => $investor,
             'produk' => $produk,
             'pesanan' => $pesanan,
+            'bank' => $bank,
         ]);
     }
 
@@ -130,5 +133,22 @@ class AdminController extends Controller
         $produk = Produk::all();
         // dd($investor);
         return view('admin.produk', compact('produk'));
+    }
+
+    public function pesanan(){
+        $pesanan = Pesanan::with('produk.pesanan', 'investor')->get();
+
+        return view('admin.pesanan', [
+            'data'      => $pesanan,
+            'title'     => 'List Pesanan',
+            'active'    => 'order.index',
+            // 'createLink'=>route('order.tambah'),
+        ]);
+    }
+    public function verifikasiPembayaran(Request $r, Pesanan $pesanan)
+    {
+        $pesanan->update([
+
+        ]);
     }
 }

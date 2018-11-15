@@ -25,13 +25,10 @@
                         <td> {{ $d->status }} </td>
                         <td>
                             @if ($d->status == 'Menunggu Pembayaran')
-
-                                {{-- {{ route('peternak.verifikasi', $p->user->id) }} --}}
-                                <a href="" class="btn btn-primary btn-sm"><i class="fa fa-money" aria-hidden="true"></i> Pembayaran</a>
-                            @endif
-                            @if ($d->status == 'Proses Verifikasi')
                                 <a href="" class="btn btn-flat btn-primary btn-sm"><i class="fa fa-check" aria-hidden="true"></i> Verifikasi</a>
+                                {{-- {{ route('peternak.verifikasi', $p->user->id) }} --}}
                             @endif
+                            <a href="" class="btn btn-primary btn-sm"><i class="fa fa-check" aria-hidden="true"></i> Pembayaran</a>
                             <a href="{{route ('produk.destroy', $d->id) }}" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a>
                         </td>
                     </tr>

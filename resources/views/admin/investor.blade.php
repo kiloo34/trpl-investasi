@@ -1,5 +1,5 @@
 @extends('view-admin')
-@section('title', 'Admin')
+@section('title', 'Daftar Investor')
 @section('content')
     <div class="table-responsive">
         <table class="table">
@@ -16,7 +16,7 @@
                 @foreach ($investor as $i)
                     <tr>
                         <td> {{ $loop->iteration }} </td>
-                        <td> {{ $i->nama }} </td>
+                        <td> {{ $i->user->nama }} </td>
                         <td> {{ $i->jenis_kelamin }} </td>
                         <td> {{ $i->no_telp }} </td>
                         <td>

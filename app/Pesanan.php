@@ -8,11 +8,13 @@ class Pesanan extends Model
 {
     protected $table = 'pesanan';
 
-    protected $filliable = [
+    protected $fillable = [
         'kuantitas',
         'total',
+        'status',
         'id_investor',
         'id_produk',
+        'id_pembayaran'
     ];
 
     public function produk(){
@@ -23,4 +25,18 @@ class Pesanan extends Model
         return $this->belongsTo('App\Investor', 'id_investor');
     }
 
+    public function pembayaran()
+    {
+        return $this->belongsTo('App\Pembayaran', 'id_pembayaran');
+    }
+
+    public function notifikasi()
+    {
+        return $this->hasMany('App\Notifikasi', 'id_pesanan');
+    }
+
+    public function progres()
+    {
+        return $this->hasMany('App\Progres', 'id_pesanan');
+    }
 }

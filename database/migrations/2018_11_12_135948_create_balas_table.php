@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInvestorTable extends Migration
+class CreateBalasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateInvestorTable extends Migration
      */
     public function up()
     {
-        Schema::create('investor', function (Blueprint $table) {
+        Schema::create('balas', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('jenis_kelamin', [
-              'Laki-Laki', 'Perempuan'
-            ]);
-            $table->String('no_telp');
-            $table->String('no_ktp');
+            $table->text('balas');
+            $table->integer('id_diskusi')->unsigned();
+            $table->foreign('id_diskusi')->on('diskusi')->references('id');
             $table->integer('id_user')->unsigned();
-            $table->foreign('id_user')->on('users')->references('id')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('id_user')->on('users')->references('id');
             $table->timestamps();
         });
     }
@@ -33,6 +31,6 @@ class CreateInvestorTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('investors');
+        Schema::dropIfExists('balas');
     }
 }

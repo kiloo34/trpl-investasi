@@ -133,7 +133,9 @@
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a href="/admin"><i class="fa fa-home" aria-hidden="true"></i> Dashboard</a>
             <a href="/produk"><i class="fa fa-product-hunt" aria-hidden="true"></i> Produk</a>
-            <button class="dropdown-btn">Member<i class="fa fa-caret-down"></i> </button>
+            <a href="/pesanan"><i class="fa fa-product-hunt" aria-hidden="true"></i> Pesanan</a>
+            <a href="{{route('bank.index')}}"><i class="fa fa-university" aria-hidden="true"></i> Akun Bank</a>
+            <button class="dropdown-btn"><i class="fa fa-users" aria-hidden="true"></i> Member<i class="fa fa-caret-down"></i> </button>
             <div class="dropdown-container">
                 <a href="/investor">
                     <i class="fa fa-user" aria-hidden="true"></i>
@@ -142,10 +144,12 @@
                     <i class="fa fa-user" aria-hidden="true"></i>
                     Peternak</a>
             </div>
-            <a href="{{ route('logout') }}"onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
+            <a href="{{ route('logout') }}"onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 {{ csrf_field() }}
             </form>
+
+            <a class="nav-link" href=""> <i class="fa fa-bell-o" aria-hidden="true"></i> Notifikasi <span class="badge badge-light"> 0</span></a>
         </div>
     </div>
 

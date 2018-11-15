@@ -36,9 +36,6 @@ class HomeController extends Controller
         }
     }
 
-    // public function beranda()
-    // {
-    //     return view('beranda.index');
-    // }
+
 
 }

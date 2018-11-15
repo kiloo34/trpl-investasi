@@ -1,4 +1,4 @@
-@section('tittle', 'Produk')
+@section('tittle', 'List Produk')
 
 @extends('view')
 
@@ -6,7 +6,7 @@
 
 @section('content')
     {{-- {{dd($errors->all())}} --}}
-    <div class="container">
+    {{-- <div class="container"> --}}
         <div class="row">
             <div class="col-md-2">
                 <br>
@@ -21,11 +21,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('produk.index') }}">Produk</a>
                         </li>
-                        <hr>
-                        <li class="nav-item">
-                            <a class="nav-link" href="">Diskusi</a>
-                        </li>
-                        <hr>
                     </ul>
 
                 </nav>
@@ -33,7 +28,6 @@
             <div class="col-md-10">
                 <br>
                 <h1>List Produk</h1>
-                <p>The .table-responsive class creates a responsive table which will scroll horizontally on small devices (under 768px). When viewing on anything larger than 768px wide, there is no difference:</p>
 
                 @if (Auth::check())
                     @if (Auth::user()->role=="investor")
@@ -43,31 +37,35 @@
                                 <!--Card-->
                                 <div class="card">
                                     <!--Card image-->
-                                    <img class="img-fluid" src="{{ $p->foto_produk }}" alt="Card image cap" style="max-height: 160px;">
+                                    <img class="img-fluid" src="{{ $p->foto_produk }}" alt="Card image cap" style="max-height: 150px;">
 
                                     <!--Card content-->
                                     <div class="card-body">
-                                        <!--Title-->
                                         <h4 class="card-title">{{ $p->nama_produk }}</h4>
-                                        <!--Text-->
                                         <p class="card-text">{{ $p->deskripsi }}</p>
-
-                                        <div class="form-group has-feedback {{ $errors->has('kuantitas') ? 'has_error' : '' }}">
+                                        <div class="form-group has-feedback {{ $errors->has('total') ? 'has_error' : '' }}">
+                                            <label for="foto_produk" class="control-label">{{__('Harga')}}:</label>
+                                            <span>
+                                                <input class="form-control" type="text" value="{{$p->harga}}" readonly id="hargaProduk">
+                                            </span>
+                                        </div>
+                                        {{-- <div class="form-group has-feedback {{ $errors->has('kuantitas') ? 'has_error' : '' }}">
                                             <label for="foto_produk" class="control-label">{{__('Kuantitas')}}:</label>
                                             <span>
-                                                <input class="form-control" type="number" id="stock" placeholder="" >
+                                                <input class="form-control" type="number" placeholder="" onkeyup="hitungTotal()" id="qty">
                                             </span>
-                                        </div>
-                                        <div class="form-group has-feedback {{ $errors->has('total') ? 'has_error' : '' }}">
-                                            <label for="foto_produk" class="control-label">{{__('Total')}}:</label>
+                                        </div> --}}
+                                        <div class="form-group has-feedback {{ $errors->has('stock') ? 'has_error' : '' }}">
+                                            <label for="foto_produk" class="control-label">{{__('Stock')}}:</label>
                                             <span>
-                                                <input class="form-control" type="text" placeholder="Readonly input here…" readonly>
+                                                <input class="form-control" type="text" placeholder="0" readonly value="{{$p->stock}}" >
                                             </span>
                                         </div>
-                                        <a href="#" class="btn btn-primary btn-sm">Order</a>
-                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#btn-detail-{{$p->id}}" data-whatever="@fat">Detail</button>
-                                    {{-- <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#btn-detail-{{$p->id}}" data-whatever="@fat">Detail</button> --}}
-                                    <a href="/diskusi/{{$p->id}}" class="btn btn-info btn-sm" data-target=""> Komentar </a>
+                                        @if ($p->stock > 0 )
+                                            <a href="{{ route('order.tambah', $p->id) }}" class="btn btn-primary btn-sm">Pesan Slot</a>
+                                        @endif
+                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#btn-detail-{{$p->id}}" data-whatever="@fat">Detail</button>
+                                        <a href="/diskusi/{{$p->id}}" class="btn btn-info btn-sm" data-target=""> Komentar </a>
                                     </div>
                                 </div>
                             <!--/.Card-->
@@ -98,19 +96,19 @@
                                             <div class="form-group row">
                                                 <label for="email" class="col-lg-3 col-form-label">Harga</label>
                                                 <div class="col-lg-9 col-md-6 col-sm-3">
-                                                    <input type="judul" readonly class="form-control-plaintext" id="staticEmail" value="{{ old('foto_produk') ? old('foto_produk') : $p->foto_produk}}">
+                                                    <input type="judul" readonly class="form-control-plaintext" id="staticEmail" value="{{ old('foto_produk') ? old('foto_produk') : $p->harga}}">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="email" class="col-lg-3 col-form-label">Stock</label>
                                                 <div class="col-lg-9 col-md-6 col-sm-3">
-                                                    <input type="judul" readonly class="form-control-plaintext" id="staticEmail" value="{{ old('foto_produk') ? old('foto_produk') : $p->foto_produk}}">
+                                                    <input type="judul" readonly class="form-control-plaintext" id="staticEmail" value="{{ old('foto_produk') ? old('foto_produk') : $p->stock}}">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="nama" class="col-lg-3 col-form-label">Peternak</label>
                                                 <div class="col-lg-9 col-md-6 col-sm-3">
-                                                    <input type="judul" readonly class="form-control-plaintext" id="static" value="{{ old('id_peternak') ? old('id_peternak') : $p->id_peternak}}">
+                                                    <input type="judul" readonly class="form-control-plaintext" id="static" value="{{ old('id_peternak') ? old('id_peternak') : $p->peternak->user->nama}}">
                                                 </div>
                                             </div>
                                             <div id="accordion">
@@ -119,21 +117,21 @@
                                                         <a class="card-link" data-toggle="collapse" href="#collapseOne">Peternak</a>
                                                     </div>
                                                     <div id="collapseOne" class="collapse show" data-parent="#accordion">
-                                                        <label for="nama" style="padding: 7px; display: inline-block; width: 30%; margin: 0;">Nama</label>
+                                                        <label style="padding: 7px; display: inline-block; width: 30%; margin: 0;">Nama</label>
                                                         <div style="display: inline-block;width: 70%;float: right;">
                                                             <input type="judul" readonly class="form-control-plaintext" id="static" value="{{ old('nama') ? old('nama') : $p->peternak->user->nama}}">
                                                         </div>
-                                                        <label for="alamat" style="padding: 7px; display: inline-block; width: 30%; margin: 0;">alamat</label>
+                                                        <label style="padding: 7px; display: inline-block; width: 30%; margin: 0;">alamat</label>
                                                         <div style="display: inline-block;width: 70%;float: right;">
                                                             <input type="judul" readonly class="form-control-plaintext" id="static" value="{{ old('alamat') ? old('alamat') : $p->peternak->alamat}}">
                                                         </div>
-                                                        <label for="nama" style="padding: 7px; display: inline-block; width: 30%; margin: 0;">Foto Profi    l</label>
+                                                        <label style="padding: 7px; display: inline-block; width: 30%; margin: 0;">Foto Profil</label>
                                                         <div style="display: inline-block;width: 70%;float: right;">
-                                                            <input type="judul" readonly class="form-control-plaintext" id="static" value="{{ old('nama') ? old('nama') : $p->peternak->foto_profil}}">
+                                                            <img src="{{ $p->peternak->foto_profil }}" class="img-responsive" alt="Cinque Terre" width="304" height="236">
                                                         </div>
-                                                        <label for="nama" style="padding: 7px; display: inline-block; width: 30%; margin: 0;">Foto KTP</label>
+                                                        <label style="padding: 7px; display: inline-block; width: 30%; margin: 0;">Foto KTP</label>
                                                         <div style="display: inline-block;width: 70%;float: right;">
-                                                            <input type="judul" readonly class="form-control-plaintext" id="static" value="{{ old('nama') ? old('nama') : $p->peternak->foto_ktp}}">
+                                                            <img src="{{ $p->peternak->foto_ktp }}" class="img-responsive" alt="Cinque Terre" width="304" height="236">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -173,10 +171,12 @@
                                             <td> {{ $p->deskripsi }} </td>
                                             <td>
                                                 <div class="btn-group">
-                                                    <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#btn-detail" data-whatever="@fat">Detail</button>
+                                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#btn-detail-{{$p->id}}" data-whatever="@fat">Detail</button>
                                                     <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#btn-ubah" data-whatever="@fat">Ubah</button>
                                                 </div>
-                                            </td>btn-primary
+                                                <hr>
+                                                <a href="/diskusi/{{$p->id}}" class="btn btn-warning btn-sm" data-target=""> Komentar <span class="badge badge-light"> {{count($p->diskusi)}} </span></a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -194,8 +194,8 @@
                                 </tfoot>
                             </table>
                         </div>
-
-                        {{$produk->links()}}
+                        {{ $produk->onEachSide(2)->links() }}
+                        {{-- {{$produk->links()}} --}}
 
 
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#btn-tambah" data-whatever="@fat"> Tambah </button>
@@ -281,15 +281,15 @@
 
                         {{-- modal detail --}}
 
-                        <div class="modal fade" id="btn-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-                            <div class="modal-dialog" role="document">
+                        @foreach ($produk as $produk)
+                        <div class="modal fade" id="btn-detail-{{$produk->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                            <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h4 class="modal-title" id="exampleModalLabel">Detail</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     </div>
                                     <div class="modal-body">
-                                        @foreach ($produk as $produk)
                                         <div class="form-group row">
                                             <label for="email" class="col-lg-3 col-form-label">Foto Produk</label>
                                             <div class="col-lg-9 col-md-6 col-sm-3">
@@ -303,24 +303,47 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="email" class="col-lg-3 col-form-label">Foto Produk</label>
+                                            <label for="email" class="col-lg-3 col-form-label">Harga</label>
                                             <div class="col-lg-9 col-md-6 col-sm-3">
-                                                <input type="judul" readonly class="form-control-plaintext" id="staticEmail" value="{{ old('foto_produk') ? old('foto_produk') : $produk->foto_produk}}">
+                                                <input type="judul" readonly class="form-control-plaintext" id="staticEmail" value="{{ old('harga') ? old('harga') : $produk->harga}}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="email" class="col-lg-3 col-form-label">Foto Produk</label>
+                                            <label for="email" class="col-lg-3 col-form-label">Periode</label>
                                             <div class="col-lg-9 col-md-6 col-sm-3">
-                                                <input type="judul" readonly class="form-control-plaintext" id="staticEmail" value="{{ old('foto_produk') ? old('foto_produk') : $produk->foto_produk}}">
+                                                <input type="judul" readonly class="form-control-plaintext" id="staticEmail" value="{{ old('periode') ? old('periode') : $produk->periode}}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="email" class="col-lg-3 col-form-label">Foto Produk</label>
+                                            <label for="email" class="col-lg-3 col-form-label">Stock</label>
                                             <div class="col-lg-9 col-md-6 col-sm-3">
-                                                <input type="judul" readonly class="form-control-plaintext" id="staticEmail" value="{{ old('foto_produk') ? old('foto_produk') : $produk->foto_produk}}">
+                                                <input type="judul" readonly class="form-control-plaintext" id="staticEmail" value="{{ old('stock') ? old('stock') : $produk->stock}}">
                                             </div>
                                         </div>
-                                        @endforeach
+                                        <div class="form-group row">
+                                            <label for="email" class="col-lg-3 col-form-label">Profil Resiko</label>
+                                            <div class="col-lg-9 col-md-6 col-sm-3">
+                                                <input type="judul" readonly class="form-control-plaintext" id="staticEmail" value="{{ old('profilResiko') ? old('profilResiko') : $produk->kontrak->profilResiko}}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="email" class="col-lg-3 col-form-label">Rencana Pengelolaan</label>
+                                            <div class="col-lg-9 col-md-6 col-sm-3">
+                                                <input type="judul" readonly class="form-control-plaintext" id="staticEmail" value="{{ old('rencanaPengelolaan') ? old('rencanaPengelolaan') : $produk->kontrak->rencanaPengelolaan}}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="email" class="col-lg-3 col-form-label">Struktur</label>
+                                            <div class="col-lg-9 col-md-6 col-sm-3">
+                                                <input type="judul" readonly class="form-control-plaintext" id="staticEmail" value="{{ old('struktur') ? old('struktur') : $produk->kontrak->struktur}}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="email" class="col-lg-3 col-form-label">Term</label>
+                                            <div class="col-lg-9 col-md-6 col-sm-3">
+                                                <input type="judul" readonly class="form-control-plaintext" id="staticEmail" value="{{ old('term') ? old('term') : $produk->kontrak->term}}">
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">tutup</button>
@@ -328,6 +351,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endforeach
 
                         {{-- modal ubah --}}
 
@@ -339,17 +363,74 @@
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="/produk/{{$produk->id}}/edit" method="post">
+                                        <form action="/peternak/{{$produk->id}}/edit_produk" method="post" enctype="multipart/form-data">
                                             {{ csrf_field() }}
-                                            <div class="form-group">
-                                                <label for="nama" class="col-form-label">Nama :</label>
-                                                <input type="text" class="form-control" value="{{ old('nama') ? old('nama') : Auth::user()->nama}}" placeholder="Nama" name="nama">
+                                            <div class="form-group row">
+                                                <label for="nama_produk" class="col-lg-3 col-form-label">{{__('Nama Produk')}}</label>
+                                                <div class="col-lg-9 col-md-6 col-sm-3">
+                                                    <input type="text" name="nama_produk" class="form-control" value="{{ old('nama_produk') ? old('nama_produk') : $produk->nama_produk}}">
+                                                </div>
                                             </div>
-                                            {{-- <div class="form-group">
-                                                <label for="no_telp" class="col-form-label">Nomor Telephone :</label>
-                                                <input type="text" class="form-control" value="{{ old('no_telp') ? old('no_telp') :$investor->no_telp}}" name="no_telp">
-                                            </div> --}}
 
+                                            <div class="form-group row">
+                                                <label for="harga" class="col-lg-3 col-form-label">{{__('Harga')}}</label>
+                                                <div class="col-lg-9 col-md-6 col-sm-3">
+                                                    <input type="text" name="harga" class="form-control" value="{{ old('harga') ? old('harga') : $produk->harga}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="periode" class="col-lg-3 col-form-label">{{__('Periode')}}</label>
+                                                <div class="col-lg-9 col-md-6 col-sm-3">
+                                                    <input type="text" name="periode" class="form-control" value="{{ old('periode') ? old('periode') : $produk->periode}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="stock" class="col-lg-3 col-form-label">{{__('Stock')}}</label>
+                                                <div class="col-lg-9 col-md-6 col-sm-3">
+                                                    <input type="text" name="stock" class="form-control" value="{{ old('stock') ? old('stock') : $produk->stock}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="deskripsi" class="col-lg-3 col-form-label">{{__('Deskripsi')}}</label>
+                                                <div class="col-lg-9 col-md-6 col-sm-3">
+                                                    <input type="text" name="deskripsi" class="form-control" value="{{ old('deskripsi') ? old('deskripsi') : $produk->deskripsi}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="foto_produk" class="col-lg-3 col-form-label">{{ __('Foto Produk') }}</label>
+                                                <div class="col-lg-9 col-md-6 col-sm-3">
+                                                    <input type="file" name="foto_produk" class="form-control" value="{{ old('foto_produk') ? old('foto_produk') : $produk->foto_produk}}" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="profilResiko" class="col-lg-3 col-form-label">Profil Resiko</label>
+                                                <div class="col-lg-9 col-md-6 col-sm-3">
+                                                    <input type="text" class="form-control" value="{{ old('profilResiko') ? old('profilResiko') : $produk->kontrak->profilResiko}}" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="rencanaPengelolaan" class="col-lg-3 col-form-label">Rencana Pengelolaan</label>
+                                                <div class="col-lg-9 col-md-6 col-sm-3">
+                                                    <input type="text" class="form-control" value="{{ old('rencanaPengelolaan') ? old('rencanaPengelolaan') : $produk->kontrak->rencanaPengelolaan}}" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="struktur" class="col-lg-3 col-form-label">Struktur</label>
+                                                <div class="col-lg-9 col-md-6 col-sm-3">
+                                                    <input type="text" class="form-control" value="{{ old('struktur') ? old('struktur') : $produk->kontrak->struktur}}" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="term" class="col-lg-3 col-form-label">Term</label>
+                                                <div class="col-lg-9 col-md-6 col-sm-3">
+                                                    <input type="text" class="form-control" value="{{ old('term') ? old('term') : $produk->kontrak->term}}" required>
+                                                </div>
+                                            </div>
                                             <input type="hidden" name="_method" value="PUT">
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -357,18 +438,22 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">tutup</button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     @endif
                 @endif
-
-
             </div>
         </div>
-    </div>
+    {{-- </div> --}}
 
+    <script type="text/javascript">
+        function hitungTotal() {
+            var qty = Number($('#qty').val());
+            var hargaProduk = Number($('#hargaProduk').val());
+            var total = qty * hargaProduk;
+            $("#total").val(total);
+        }
+    </script>
 @endsection
+

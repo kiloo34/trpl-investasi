@@ -27,15 +27,15 @@ class Produk extends Model
     }
 
     public function pesanan(){
-        return $this->hasMany('App\Pesanan', 'id_pesanan');
+        return $this->hasOne('App\Pesanan', 'id_produk');
     }
 
     public function kontrak(){
-        return $this->hasOne('App\Kontrak', 'id_kontrak');
+        return $this->belongsTo('App\Kontrak', 'id_kontrak');
     }
 
     public function diskusi(){
-        return $this->hasMany('App\Diskusi', 'id_diskusi');
+        return $this->hasMany('App\Diskusi', 'id_produk');
     }
 
 }

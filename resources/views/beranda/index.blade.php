@@ -6,7 +6,6 @@
 
 @section('content')
 
-    <div class="container">
         @if (Auth::check())
             <h1 class="my-4">Selamat Datang {{Auth::user()->nama}} di Ngoter</h1>
             <h3 class="my-4">Anda Sebagai {{Auth::user()->role}}</h3>
@@ -117,5 +116,6 @@
                 <a class="btn btn-lg btn-secondary btn-block" href="#">Call to Action</a>
             </div>
         </div>
-    </div>
+
+    @include('footer')
 @endsection

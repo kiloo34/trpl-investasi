@@ -30,16 +30,26 @@ class User extends Authenticatable
 
     public function investor()
     {
-        return $this->hasOne('App\Investor', 'id_investor');
+        return $this->hasOne('App\Investor', 'id_user');
     }
 
     public function peternak()
     {
-        return $this->hasOne('App\Peternak', 'id_peternak');
+        return $this->hasOne('App\Peternak', 'id_user');
     }
 
     public function diskusi()
     {
         return $this->hasMany('App\Diskusi', 'id_diskusi');
+    }
+
+    public function akun_bank()
+    {
+        return $this->hasMany('App\AkunBank', 'id_user');
+    }
+
+    public function notifikasi()
+    {
+        return $this->hasMany('App\Notifikasi', 'id_user');
     }
 }

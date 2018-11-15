@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\Balas;
 use App\Diskusi;
 use App\Produk;
 use App\Peternak;
 use App\Investor;
+use App\Notifikasi;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -24,15 +27,36 @@ class DiskusiController extends Controller
      */
     public function index($id)
     {
-        $diskusi = Diskusi::where('id_produk',$id)->get();
-        // dd($diskusi);
+        $id_produk = $id;
+        $diskusi = Diskusi::with('produk.peternak.user')->where('id_produk',$id)->get();
+
         $id_user = auth()->user()->id;
         $user = User::find($id_user);
-        // $id_produk = produk()->id;
-        // $produk = Produk::find($id_produk);
-        // $produk = Produk::where('id_produk', produk()->id)->first();
+
         // dd($diskusi);
-        return view('Diskusi.index')->with('diskusi', $diskusi, $user);
+
+        return view('diskusi.index',[
+            'diskusi'=>$diskusi,
+            'user'=>$user,
+            'id_produk'=>$id_produk,
+            // dd($diskusi)
+        ]);
+    }
+
+    public function balas_index($id)
+    {
+        $id_diskusi = $id;
+        $data = Balas::join('diskusi', 'diskusi.id', '=', 'balas.id_diskusi')->where('id_diskusi', $id)->first();
+        $balas = Balas::with('diskusi.balas.user', 'diskusi.produk.peternak.user')->where('id_diskusi', $id)->get();
+        // dd($data->judul);
+        return view('diskusi.balas', [
+            'balas'     => $data,
+            'data'      => $balas,
+            'tittle'    => 'Saldo',
+            'active'    => 'balas.balas_index',
+            'id_diskusi'=> $id_diskusi
+            // 'createLink'=> route('order.balas')
+        ]);
     }
 
     /**
@@ -58,13 +82,41 @@ class DiskusiController extends Controller
             'body' => 'required',
         ]);
 
-        $diskusi = $request->user()->diskusi()->create([
+        $diskusi = Diskusi::create([
             'judul'     => $request->judul,
             'body'      => $request->body,
-            'id_produk' => $id,
+            'id_user'   => Auth::user()->id,
+            'id_produk' => $id
         ]);
 
-        return redirect()->route('diskusi.index');
+        $notifikasi = Notifikasi::create([
+            'subject'   => 'ada Diskusi Produk dari '. Auth::user()->nama,
+            'id_diskusi'=> $diskusi->id,
+            'id_user'   => $request->id_user,
+        ]);
+
+        return redirect()->route('diskusi.index', $id)->with('msg', 'komentar berhasil ditambah');
+    }
+
+    public function balas(Request $request, $id)
+    {
+        $this->validate($request, [
+            'balas' => 'required',
+        ]);
+
+        $balas = Balas::create([
+            'balas'     => $request->balas,
+            'id_diskusi'=> $id,
+            'id_user'   => Auth::user()->id,
+        ]);
+
+        $notifikasi = Notifikasi::create([
+            'subject'   => 'ada Balasan Diskusi dari '. Auth::user()->nama,
+            'id_diskusi'=> $id,
+            'id_user'   => $request->id_user,
+        ]);
+
+        return redirect()->route('diskusi.balas_index', $id);
     }
 
     /**
