@@ -8,7 +8,7 @@
 
         <div class="row justify-content-center">
             {{-- {{ dd($diskusi) }} --}}
-
+            @include('msg_succes')
             @if (count($diskusi) >= 1)
                 @foreach ($diskusi as $d)
                     <div class="col-md-8" style="padding : 10px">
@@ -46,8 +46,7 @@
                                 @if (Auth::user()->id != $d->produk->peternak->user->id) {{--login--}}
                                     <input type="hidden" name="id_user" value="{{$d->produk->peternak->user->id}}">
                                 @else
-                                    {{-- {{dd($d->diskusi->user->id)}} --}}
-                                    {{-- <input type="hidden" name="id_user" value="{{$d->diskusi->user->id}}"> --}}
+
                                 @endif
                             @endforeach
                             <div class="form-group">

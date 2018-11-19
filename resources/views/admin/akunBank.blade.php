@@ -96,12 +96,15 @@
                 <form action="{{route('bank.akun')}}" method="post">
                     {{ csrf_field() }}
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1">Kode Bank (select one):</label>
-                        <select name="id_bank" class="form-control" id="exampleFormControlSelect1">
+                        <label for="exampleFormControlSelect1">Nama Bank (select one):</label>
+                        <select name="nama" class="form-control" id="exampleFormControlSelect1">
                             @foreach ($bank as $b)
-                                <option>{{$b->id}}</option>
+                                <option>{{$b->nama_bank}}</option>
                             @endforeach
                         </select>
+                        @foreach ($bank as $b)
+                            <input type="hidden" name="id_bank" value="{{$b->id}}">
+                        @endforeach
                     </div>
                     <div class="form-group has-feedback {{ $errors->has('an') ? 'has_error' : '' }}">
                         <label for="an" class="control-label">{{__('Atas Nama')}}:</label>

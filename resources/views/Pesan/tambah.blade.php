@@ -115,6 +115,16 @@
                                     <input name="total" placeholder="{{$produk->harga}}" class="form-control" readonly id="total">
                                 </span>
                             </div>
+                            <div class="form-group">
+                                <label for="total" class="control-label">{{__('Metode Pembayaran')}}:</label>
+                                <span>
+                                    <select class="custom-select" name="pembayaran">
+                                        <option selected>Open this select menu</option>
+                                        <option value="transfer"> Transfer </option>
+                                        <option value="saldo"> Saldo </option>
+                                    </select>
+                                </span>
+                            </div>
                             <button type="submit" action="{{ route('order.store') }}" class="btn btn-default" id="btn_beli">Beli</button>
                         </form>
                     </div>

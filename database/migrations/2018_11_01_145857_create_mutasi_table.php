@@ -24,6 +24,8 @@ class CreateMutasiTable extends Migration
             $table->foreign('id_akun_bank')->references('id')->on('akun_bank')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('id_saldo')->unsigned();
             $table->foreign('id_saldo')->references('id')->on('saldo')->onUpdate('cascade');
+            $table->integer('id_pembayaran')->unsigned()->nullable();
+            $table->foreign('id_pembayaran')->on('pembayaran')->references('id')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

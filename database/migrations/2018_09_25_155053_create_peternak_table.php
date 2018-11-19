@@ -20,15 +20,15 @@ class CreatePeternakTable extends Migration
             $table->String('kabupaten');
             $table->String('kecamatan');
             $table->String('kelurahan');
-            $table->string('foto_kandang') ;
-            $table->String('foto_ktp') ;
-            $table->String('foto_profil') ;
+            $table->string('foto_kandang')->nullable();
+            $table->String('foto_ktp')->nullable();
+            $table->String('foto_profil')->nullable();
             $table->enum('jenis_kelamin', [
               'Laki-Laki', 'Perempuan'
             ]);
             $table->String('no_ktp');
             $table->String('no_telp');
-            $table->dateTime('tgl_lahir');
+            $table->dateTime('tgl_lahir')->nullable();
             $table->integer('id_user')->unsigned();
             $table->foreign('id_user')->on('users')->references('id')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

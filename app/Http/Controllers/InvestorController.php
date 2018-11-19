@@ -48,6 +48,7 @@ class InvestorController extends Controller
     public function produk(){
         $produk = Produk::all();
         return view('produk.index', ['produk' => $produk]);
+        dd($produk);
     }
 
     public function akun_bank()
@@ -98,7 +99,7 @@ class InvestorController extends Controller
             'no_telp' => $request->no_telp,
             'id_user' => $user->id,
         ]);
-        return redirect()->route('investor.index')->with('message', 'Data Investor Berhasil dibuat');
+        return redirect()->route('investor.index')->with('success_msg', 'Data Investor Berhasil dibuat');
     }
 
     /**
@@ -147,7 +148,7 @@ class InvestorController extends Controller
 
         $investor->save();
 
-        return back()->with('success','Profil Telah Diperbarui');
+        return back()->with('success_msg', 'Profil Telah Diperbarui');
     }
 
     /**

@@ -17,15 +17,15 @@ class HarusAktif
     public function handle($request, Closure $next)
     {
         // dd('masuk');
-        if (Auth::check()) {
+        // if (Auth::check()) {
             if($request->user()->status == "aktif"){
                 return $next($request);
             }
             Auth::logout();
-            return redirect('login')->with('msg','kentut');
-        } else {
-            return view('/');
-        }
+            return redirect('login')->with('success_msg', 'Akun Menunggu verifikasi Admin ');
+        // } else {
+        //     return view('/');
+        // }
 
     }
 }

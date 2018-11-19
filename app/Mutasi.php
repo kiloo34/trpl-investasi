@@ -12,7 +12,8 @@ class Mutasi extends Model
         'nominal',
         'Status',
         'id_akun_bank',
-        'id_saldo'
+        'id_saldo',
+        'id_pembayaran'
     ];
 
     public function akun_bank()
@@ -23,6 +24,11 @@ class Mutasi extends Model
     public function saldo()
     {
         return $this->belongsTo('App\Saldo', 'id_saldo');
+    }
+
+    public function pembayaran()
+    {
+        return $this->belongsTo('App\Pembayaran', 'id_pembayaran');
     }
 
     public function notifikasi()

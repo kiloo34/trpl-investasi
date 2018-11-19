@@ -31,11 +31,11 @@
                         <td> {{ $p->no_telp }} </td>
                         <td>
                             @if($p->user->status == 'aktif')
-                                <span class="label label-success">
+                                <span class="badge badge-pill badge-success">
                                     {{ $p->user->status }}
                                 </span>
                             @else
-                                <span class="label label-warning">
+                                <span class="badge badge-pill badge-warning">
                                     {{ $p->user->status }}
                                 </span>
                             @endif
@@ -44,8 +44,7 @@
                             @if ($p->user->status == 'belum aktif')
                                 <a href="{{ route('peternak.verifikasi', $p->user->id) }}" class="btn btn-flat btn-primary btn-sm">Verifikasi</a>
                             @endif
-                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#btn-detail" data-whatever="@fat"> <i class="fa fa-search"></i> Detail</button>
-                            {{-- <a href="users/verifikasi/{peternak}" class="btn btn-flat btn-primary ">Verifikasi</a> --}}
+                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#btn-detail-{{$p->id}}" data-whatever="@fat"> <i class="fa fa-search"></i> Detail</button>
                         </td>
                     </tr>
                 @endforeach
@@ -67,7 +66,8 @@
         </table>
     </div>
 
-    <div class="modal fade" id="btn-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    @foreach ($peternak as $p)
+        <div class="modal fade" id="btn-detail-{{$p->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -77,20 +77,31 @@
                     <div class="modal-body">
                         <form>
                             <div class="form-group">
-                                <label for="recipient-name" class="control-label">Nama:</label>
-                                <input type="text" class="form-control" id="recipient-name">
+                                <label for="recipient-name" class="col-form-label">Nama : </label>
+                                <input class="form-control" id="recipient-name" value="{{ $p->user->nama }}"readonly>
                             </div>
                             <div class="form-group">
-                                <label for="message-text" class="control-label">sdasdsa :</label>
-                                <textarea class="form-control" id="message-text"></textarea>
+                                <label for="message-text" class="col-form-label">No Identitas : </label>
+                                <input class="form-control" id="message-text" value="{{ $p->no_ktp }}"readonly></input>
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Jenis Kelamin : </label>
+                                <input class="form-control" id="recipient-name" value="{{ $p->jenis_kelamin }}"readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">Nomor Telepon : </label>
+                                <input class="form-control" id="message-text" value="{{ $p->no_telp }}"readonly></input>
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">Email : </label>
+                                <input class="form-control" id="message-text" value="{{ $p->user->email }}"readonly></input>
                             </div>
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">tutup</button>
+                        <button type="button" class="btn btn-default" style="float: right" data-dismiss="modal">tutup</button>
                     </div>
                 </div>
             </div>
         </div>
+    @endforeach
 
 @endsection

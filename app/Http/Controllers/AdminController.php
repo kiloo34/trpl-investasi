@@ -105,7 +105,7 @@ class AdminController extends Controller
     {
         // dd('masuk');
         $produk->delete();
-        return redirect()->route('admin.produk')->with('success_msg', 'berhasil dihapus');
+        return redirect()->route('admin.produk')->with('success_msg', 'Produk berhasil dihapus');
     }
 
     public function verifikasi(Request $r, User $user)
@@ -114,13 +114,15 @@ class AdminController extends Controller
             'status'=>'aktif',
         ]);
         // dd('1');
-        return redirect()->back()->with('success_msg','Peternak berhasil diverifikasi');
+        return redirect()->back()->with('success_msg', 'Peternak berhasil diverifikasi');
     }
 
     public function investor(){
-        $investor = Investor::all();
+        $investor = Investor::with('akun_bank.investor')->get();
         // dd($investor);
-        return view('admin.investor', compact('investor'));
+        return view('admin.investor', [
+            'investor'  => $investor
+        ]);
     }
 
     public function peternak(){
@@ -145,10 +147,36 @@ class AdminController extends Controller
             // 'createLink'=>route('order.tambah'),
         ]);
     }
-    public function verifikasiPembayaran(Request $r, Pesanan $pesanan)
+    public function verifikasiPembayaran(Request $r, $id)
     {
-        $pesanan->update([
+        $pesanan = Pesanan::findOrFail($id);
 
+        $pesanan->update([
+            'status' => 'Dalam Proses'
         ]);
+
+        return redirect()->route('admin.pesanan')->with('success_msg', 'Pembayaran Pesanan sudah diverifikasi');
+    }
+
+    public function lanjutkan(Request $r, $id)
+    {
+        $pesanan = Pesanan::findOrFail($id);
+
+        $pesanan->update([
+            'status' => 'Berjalan'
+        ]);
+
+        return redirect()->route('admin.pesanan')->with('success_msg', 'Pesanan sudah diverifikasi');
+    }
+
+    public function batalPesanan(Request $r, $id)
+    {
+        $pesanan = Pesanan::findOrFail($id);
+
+        $pesanan->update([
+            'status' => 'Dibatalkan'
+        ]);
+
+        return redirect()->route('admin.pesanan')->with('success_msg', 'Pesanan Dibatalkan');
     }
 }

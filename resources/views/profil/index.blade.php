@@ -17,6 +17,7 @@
 
         <!-- Content Row -->
         <div class="row">
+            @include('msg_succes')
         <!-- Sidebar Column -->
             @if (Auth::check())
                 @if (Auth::user()->role=='investor')
@@ -87,7 +88,7 @@
                 <div class="form-group row">
                     <label for="foto_profil" class="col-lg-3 col-form-label"></label>
                     <div class="col-lg-9 col-md-6 col-sm-3">
-                    <img src="{{ $peternak->foto_profil }}" class="img-responsive" alt="Cinque Terre" width="304" height="236">
+                        <img src="{{ $peternak->foto_profil }}" class="img-responsive" alt="Cinque Terre" width="304" height="236">
                     </div>
                 </div>
 

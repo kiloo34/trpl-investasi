@@ -6,6 +6,8 @@
 
 @section('content')
 
-  @include('footer')
+    {{Session::get('message')}}
+
+    @include('footer')
 
 @endsection

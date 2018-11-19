@@ -95,7 +95,7 @@ class DiskusiController extends Controller
             'id_user'   => $request->id_user,
         ]);
 
-        return redirect()->route('diskusi.index', $id)->with('msg', 'komentar berhasil ditambah');
+        return redirect()->route('diskusi.index', $id)->with('success_msg', 'komentar berhasil ditambah');
     }
 
     public function balas(Request $request, $id)
@@ -116,7 +116,7 @@ class DiskusiController extends Controller
             'id_user'   => $request->id_user,
         ]);
 
-        return redirect()->route('diskusi.balas_index', $id);
+        return redirect()->route('diskusi.balas_index', $id)->with('success_msg', 'Reply berhasil ditambahkan');
     }
 
     /**

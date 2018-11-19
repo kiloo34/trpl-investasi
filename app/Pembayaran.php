@@ -15,7 +15,12 @@ class Pembayaran extends Model
 
     public function pesanan()
     {
-        return $this->hasOne('App\Pesanan', 'id_pembayaran', 'local_key');
+        return $this->hasOne('App\Pesanan', 'id_pembayaran');
+    }
+
+    public function mutasi()
+    {
+        return $this->hasOne('App\Mutasi', 'id_pembayaran');
     }
 
     public function notifikasi()

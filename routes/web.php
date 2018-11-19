@@ -14,6 +14,9 @@ Route::group(['middleware' => ['admindoang']], function () {
     Route::get('/peternak', 'AdminController@peternak')->name('admin.peternak');
     Route::get('/investor', 'AdminController@investor')->name('admin.investor');
     Route::get('/pesanan', 'AdminController@pesanan')->name('admin.pesanan');
+    Route::get('/pesanan/verifikasi/{id}', 'AdminController@verifikasiPembayaran')->name('admin.verifikasiPembayaran');
+    Route::get('/pesanan/batal/{id}', 'AdminController@batalPesanan')->name('admin.batalPesanan');
+    Route::get('/pesanan/proses/{id}', 'AdminController@lanjutkan')->name('admin.lanjutkan');
     Route::get('/produk', 'AdminController@produk')->name('admin.produk');
     Route::get('/bank', 'AdminController@bank')->name('admin.bank');
     Route::get('/peternak/verifikasi/{user}', 'AdminController@verifikasi')->name('peternak.verifikasi');
@@ -30,9 +33,9 @@ Route::group(['middleware' => ['harusaktif']], function () {
     Route::put('/investor/{id}/edit', 'InvestorController@update')->name('investor.update');
 
     Route::resource('order', 'OrderController')->except('create');
-    Route::get('/order/list', 'OrderController@index')->name('pesanan.index');
+    Route::get('/order/detail/{id}', 'OrderController@detail')->name('order.detail');
     Route::get('/order/tambah/{id}', 'OrderController@tambah')->name('order.tambah');
-    // Route::post('/order/store/{id}', 'OrderController@store')->name('order.store');
+    Route::post('order/bukti/{id}', 'OrderController@pembayaran')->name('bukti.pembayaran');
 
     //saldo
     Route::resource('saldo', 'SaldoController')->except('show', 'edit', 'destroy');

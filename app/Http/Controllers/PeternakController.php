@@ -112,7 +112,7 @@ class PeternakController extends Controller
         ]);
         // dd('losssss');
 
-        return redirect()->route('profil.index')->with('message', 'Data Peternak berhasil dibuat');
+        return redirect()->route('profil.index')->with('success_msg', 'Data Peternak berhasil dibuat');
 
     }
 
@@ -155,8 +155,6 @@ class PeternakController extends Controller
 
         $user->save();
 
-        // dd($request);
-
         $f_p = $request->file('foto_profil')->store('public');
         $f_p = str_replace('public', '', $f_p);
         $f_p = str_replace('\\', '/', $f_p);
@@ -173,7 +171,7 @@ class PeternakController extends Controller
         $f_kandang = asset('storage'.$f_kandang);
 
 
-        $peternak = Peternak::where('id_user',Auth::user()->id)->first();;
+        $peternak = Peternak::where('id_user',Auth::user()->id)->first();
         $peternak->alamat = $request->alamat;
         $peternak->provinsi = $request->provinsi;
         $peternak->kabupaten = $request->kabupaten;
@@ -189,7 +187,7 @@ class PeternakController extends Controller
 
         $peternak->save();
 
-        return back()->with('msg_succes', 'Profil Telah Diperbarui');
+        return back()->with('success_msg', 'Profil Telah Diperbarui');
     }
 
     /**
@@ -254,7 +252,7 @@ class PeternakController extends Controller
             'id_kontrak' => $kontrak->id,
         ]);
 
-        return redirect()->route('produk.index')->with('message', 'Data Produk berhasil ditambah');
+        return redirect()->route('produk.index')->with('success_msg', 'Data Produk berhasil ditambah');
     }
 
     public function update_produk(Request $request, $id){
@@ -283,7 +281,7 @@ class PeternakController extends Controller
         $produk->deskripsi = $request->deskripsi;
 
         $produk->save();
-        return back()->with('msg_succes', 'Produk Telah Diperbarui');
+        return back()->with('success_msg', 'Produk Telah Diperbarui');
     }
 
 }

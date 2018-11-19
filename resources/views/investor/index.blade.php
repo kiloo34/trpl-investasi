@@ -2,8 +2,9 @@
 @include('navbar')
 @section('title', 'Profil')
 
+
 @section('content')
 
-@include('footer')
+    @include('footer')
 
 @endsection
