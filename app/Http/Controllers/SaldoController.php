@@ -25,7 +25,7 @@ class SaldoController extends Controller
             $data = Saldo::with('mutasi.akun_bank', 'investor')->join('mutasi', 'saldo.id', '=', 'mutasi.id_saldo')->where('id_investor', Auth::user()->investor()->first()->id)->get();
             $saldo = Saldo::with('mutasi.akun_bank', 'investor')->where('id_investor', Auth::user()->investor()->first()->id)->first();
             $akunBank = AkunBank::with('bank.akun_bank')->where('id_user', Auth::user()->id)->get();
-            $akunBank = AkunBank::with('bank.akun_bank')->where('id_user', Auth::user()->id)->get();
+            // $akunBank = AkunBank::with('bank.akun_bank')->where('id_user', Auth::user()->id)->get();
 
             // dd($saldo);
 

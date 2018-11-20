@@ -20,7 +20,7 @@ class CreateMutasiTable extends Migration
                 'dalam pengajuan', 'diproses', 'selesai'
             ]);
             $table->integer('sAkhir');
-            $table->integer('id_akun_bank')->unsigned();
+            $table->integer('id_akun_bank')->unsigned()->nullable();
             $table->foreign('id_akun_bank')->references('id')->on('akun_bank')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('id_saldo')->unsigned();
             $table->foreign('id_saldo')->references('id')->on('saldo')->onUpdate('cascade');

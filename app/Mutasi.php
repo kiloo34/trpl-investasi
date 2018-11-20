@@ -11,6 +11,7 @@ class Mutasi extends Model
     protected $fillable = [
         'nominal',
         'Status',
+        'keterangan',
         'id_akun_bank',
         'id_saldo',
         'id_pembayaran'

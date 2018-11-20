@@ -10,7 +10,6 @@ class Saldo extends Model
 
     protected $fillable = [
         'saldo',
-        'keterangan',
         'sAwal',
         'sAkhir',
         'id_investor'

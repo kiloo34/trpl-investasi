@@ -28,7 +28,7 @@ Route::group(['middleware' => ['admindoang']], function () {
 Route::group(['middleware' => ['harusaktif']], function () {
 
     Route::get('/investor/profil', 'InvestorController@index')->name('investor.index');
-    Route::get('/investor/pantau', 'InvestorController@pantau')->name('produk.pantau');
+    Route::get('/investor/pantau/{id}', 'InvestorController@pantau')->name('produk.pantau');
     Route::get('/investor/produk', 'InvestorController@produk')->name('produk.index');
     Route::put('/investor/{id}/edit', 'InvestorController@update')->name('investor.update');
 

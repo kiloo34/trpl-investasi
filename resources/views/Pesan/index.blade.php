@@ -25,6 +25,10 @@
                         <button type="button" class="btn btn-primary" style="float: right" data-toggle="modal" data-target="#upload-{{$d->id}}"> Upload Bukti Pembayaran </button>
                     @endif
                 @endif
+                @if ($d->status == "Berjalan")
+                    <a href="{{ route('produk.pantau', $d->id) }}"" class="btn btn-primary" style="float: right">Lihat Progres</a>
+                    {{-- <button type="button" class="btn btn-primary" style="float: right"> Lihat Progres </button> --}}
+                @endif
             </div>
         </div>
         <br>

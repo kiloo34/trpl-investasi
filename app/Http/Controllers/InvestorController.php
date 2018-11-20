@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Investor;
 use App\Produk;
+use App\Progres;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -32,17 +33,13 @@ class InvestorController extends Controller
         }
     }
 
-    public function pantau(){
-        if (Auth::check()) {
-            if (Auth::user()->role=='investor') {
-                $investor = investor::where('id_user', Auth::user()->id)->first();
-                return view('produk.pantau', compact('produk'));
-            } else {
-                abort(404);
-            }
-        } else {
-            abort(404);
-        }
+    public function pantau($id){
+
+        $progres = Progres::with('produk.pesanan.progres')->where('id_pesanan', $id);
+        dd($progres);
+        return view('progres.index', [
+            'data'  => $progres
+        ]);
     }
 
     public function produk(){

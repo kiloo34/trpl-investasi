@@ -9,6 +9,8 @@ use App\Produk;
 use App\Investor;
 use App\Saldo;
 use App\User;
+use App\Mutasi;
+use App\Progres;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -33,7 +35,7 @@ class OrderController extends Controller
         }
         else {
             $data = Pesanan::with('pembayaran.pesanan.produk', 'investor.user', 'pembayaran.mutasi.saldo')->where('id_investor', Auth::user()->investor()->first()->id)->get();
-            // $admin = User::where('id', Auth::user()->role == 'admin ' )->get();
+            $admin = User::where('role', Auth::user()->role == 'admin ' )->get();
             // dd($admin);
             return view('pesan.index', [
                 'data'      => $data,
@@ -64,14 +66,17 @@ class OrderController extends Controller
     public function create($id)
     {
         //
+
     }
 
     public function tambah($id)
     {
         $produk = Produk::find($id);
-
+        $saldo = Saldo::where('id_investor', Auth::user()->investor()->first()->id)->get();
+        // dd($saldo);
         return view('pesan.tambah', [
             'produk'        => $produk,
+            'saldo'         => $saldo,
             'title'         => 'Tambah Slot',
             'modul_link'    => route('order.index'),
             'modul'         => 'Order',
@@ -97,10 +102,10 @@ class OrderController extends Controller
             'pembayaran'    => $request->pembayaran,
         ]);
 
-        Pesanan::create([
+        $pesanan = Pesanan::create([
             'kuantitas'     => $request->kuantitas,
             'total'         => $request->total,
-            'status'        => 'Menunggu Pembayaran',
+            'status'        => $request->status,
             'id_investor'   => Investor::where('id_user',$request->user()->id)->first()->id,
             'id_produk'     => $request->id_produk,
             'id_pembayaran' => $pembayaran->id
@@ -111,6 +116,27 @@ class OrderController extends Controller
         $produk->update([
             'stock' => $produk->stock - $request->kuantitas
         ]);
+
+        Progres::create([
+            'id_pesanan'    => $pesanan->id
+        ]);
+
+        if ($request->pembayaran == 'saldo') {
+            // dd($request->id_saldo);
+            $saldo = Saldo::findOrFail($request->id_saldo);
+            // dd($saldo);
+            $saldo->update([
+                'saldo' => $saldo->saldo - $request->total
+            ]);
+
+            Mutasi::create([
+                'nominal'       => $request->total,
+                'Status'        => 'selesai',
+                'keterangan'    => 'Pembayaran Orderan Id ' . $pembayaran->id,
+                'id_saldo'      => $saldo->id,
+                'id_pembayaran' => $pembayaran->id
+            ]);
+        }
 
         return redirect()->route('order.index')->with('success_msg', 'data Pesanan Berhasil dibuat');
 

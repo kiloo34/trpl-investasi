@@ -102,6 +102,7 @@
                 <tbody>
                     @foreach ($data as $d)
                     <tr>
+                        {{-- {{dd($d->keterangan)}} --}}
                         <th>{{ $loop->iteration }}</th>
                         <th>
                             <span class="label label-success">
@@ -131,25 +132,23 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#form-tarik').hide();
-
-        $('#tarik').on('click', function(e) {
-            e.preventDefault();
-            $('#form-tarik').show();
-        });
-
-        $('#batal').on('click', function (e) {
-            e.preventDefault();
-            $('#form-tarik').hide();
-        })
-    })
-</script>
-
 @endsection
 
 @push('script')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#form-tarik').hide();
 
+            $('#tarik').on('click', function(e) {
+                e.preventDefault();
+                $('#form-tarik').show();
+            });
+
+            $('#batal').on('click', function (e) {
+                e.preventDefault();
+                $('#form-tarik').hide();
+            })
+        })
+    </script>
 @endpush
 

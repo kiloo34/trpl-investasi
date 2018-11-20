@@ -16,8 +16,8 @@ class CreateProgresTable extends Migration
         Schema::create('progres', function (Blueprint $table) {
             $table->increments('id');
             $table->String('foto')->nullable();
-            $table->String('aktifitas');
-            $table->text('deskripsi');
+            $table->String('aktifitas')->nullable();
+            $table->text('deskripsi')->nullable();
             $table->integer('id_pesanan')->unsigned();
             $table->foreign('id_pesanan')->on('pesanan')->references('id');
             $table->timestamps();
