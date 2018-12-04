@@ -5,13 +5,15 @@
 @include('header')
 
 @section('content')
-
+    <div class="mt-4"></div>
+@include('msg_succes')
         @if (Auth::check())
             <h1 class="my-4">Selamat Datang {{Auth::user()->nama}} di Ngoter</h1>
             <h3 class="my-4">Anda Sebagai {{Auth::user()->role}}</h3>
         @else
             <h1 class="my-4">Selamat Datang di Ngoter</h1>
         @endif
+
 
         <!-- Features Section -->
         <div class="row">

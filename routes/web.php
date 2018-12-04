@@ -15,10 +15,14 @@ Route::group(['middleware' => ['admindoang']], function () {
     Route::get('/investor', 'AdminController@investor')->name('admin.investor');
     Route::get('/pesanan', 'AdminController@pesanan')->name('admin.pesanan');
     Route::get('/pesanan/verifikasi/{id}', 'AdminController@verifikasiPembayaran')->name('admin.verifikasiPembayaran');
+    Route::get('/pesanan/verifikasiProg/{id}', 'AdminController@verifikasiPembayaranProg')->name('admin.verifikasiPembayaranProg');
     Route::get('/pesanan/batal/{id}', 'AdminController@batalPesanan')->name('admin.batalPesanan');
+    Route::get('/pesanan/batalVerif/{id}', 'AdminController@batalVerif')->name('admin.batalVerif');
+    Route::get('/pesanan/selesai/{id}', 'AdminController@selesai')->name('admin.selesai');
     Route::get('/pesanan/proses/{id}', 'AdminController@lanjutkan')->name('admin.lanjutkan');
     Route::get('/produk', 'AdminController@produk')->name('admin.produk');
     Route::get('/bank', 'AdminController@bank')->name('admin.bank');
+    Route::get('/kontrak', 'AdminController@kontrak')->name('admin.kontrak');
     Route::get('/peternak/verifikasi/{user}', 'AdminController@verifikasi')->name('peternak.verifikasi');
     Route::get('/produk/delete/{produk}', 'AdminController@destroy')->name('produk.destroy');
     Route::resource('bank', 'BankController');
@@ -44,8 +48,12 @@ Route::group(['middleware' => ['harusaktif']], function () {
     Route::get('/peternak/profil', 'PeternakController@index')->name('peternak.index');
     Route::put('/peternak/{id}/edit', 'PeternakController@update')->name('peternak.update');
     Route::get('/peternak/produk', 'PeternakController@produk')->name('produk.index');
+    Route::get('/investor/progres/{id}', 'PeternakController@tProgres')->name('peternak.tProgres');
+    Route::post('/peternak/tambah_progres/{id}', 'PeternakController@progres')->name('peternak.progres');
     Route::post('/peternak/tambah_produk', 'PeternakController@tambah_produk')->name('peternak.tambah_produk');
     Route::put('/peternak/{id}/edit_produk', 'PeternakController@update_produk')->name('peternak.update_produk');
+    Route::post('tfAdmin/bukti/{id}/{idp}', 'PeternakController@tfAdmin')->name('bukti.tfAdmin');
+
 
     // diskusi
     // Route::resource('diskusi', 'DiskusiController');
@@ -57,6 +65,8 @@ Route::group(['middleware' => ['harusaktif']], function () {
     Route::resource('bank', 'BankController');
     // Route::post('bank/akun', 'BankController@akun')->name('bank.akun');
     Route::post('bank/tarik', 'BankController@tarik')->name('bank.tarik');
+
+    Route::get('notifikasi', 'HomeController@get_notif')->name('notifikasi');
 
 });
 

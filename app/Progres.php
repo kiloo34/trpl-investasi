@@ -11,7 +11,7 @@ class Progres extends Model
     protected $fillable = [
         'foto',
         'aktifitas',
-        'desripsi',
+        'deskripsi',
         'id_pesanan'
     ];
 

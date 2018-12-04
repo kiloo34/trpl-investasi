@@ -34,6 +34,7 @@
                         <div class="list-group">
                             <a href="/profil" class="list-group-item">Profil</a>
                             <a href="#" class="list-group-item">Produk</a>
+                            <a href="{{ route('order.index') }}" class="list-group-item">Daftar Pesanan</a>
                         </div>
                     </div>
 

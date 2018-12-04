@@ -24,9 +24,9 @@ class CreatePeternakTable extends Migration
             $table->String('foto_ktp')->nullable();
             $table->String('foto_profil')->nullable();
             $table->enum('jenis_kelamin', [
-              'Laki-Laki', 'Perempuan'
+                'Laki-Laki', 'Perempuan'
             ]);
-            $table->String('no_ktp');
+            $table->String('no_ktp')->nullable();
             $table->String('no_telp');
             $table->dateTime('tgl_lahir')->nullable();
             $table->integer('id_user')->unsigned();

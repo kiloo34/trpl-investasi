@@ -6,6 +6,7 @@ use App\User;
 use App\Investor;
 use App\Produk;
 use App\Progres;
+use App\Pesanan;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -20,10 +21,10 @@ class InvestorController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            if (Auth::user()->role=='investor') {
+            if (Auth::user()->role == 'investor') {
                 $investor = investor::where('id_user', Auth::user()->id)->first();
                 return view('investor.index', [
-                    'investor'  => $investor,
+                    'investor' => $investor,
                 ]);
             } else {
                 abort(404);
@@ -33,16 +34,21 @@ class InvestorController extends Controller
         }
     }
 
-    public function pantau($id){
+    public function pantau($id)
+    {
+        $pesanan = Pesanan::join('produk', 'pesanan.id_produk', '=', 'produk.id')->join('investor', 'pesanan.id_investor', '=', 'investor.id')->find($id);
 
-        $progres = Progres::with('produk.pesanan.progres')->where('id_pesanan', $id);
-        dd($progres);
+        $progres = Progres::with('pesanan.produk')->where('id_pesanan', $id)->get();
+        // $progres = Pesanan::with('produk.pesanan.progres')->where('id', $id)->get();
+        // dd($progres);
         return view('progres.index', [
-            'data'  => $progres
+            'data' => $pesanan,
+            'progres' => $progres
         ]);
     }
 
-    public function produk(){
+    public function produk()
+    {
         $produk = Produk::all();
         return view('produk.index', ['produk' => $produk]);
         dd($produk);
@@ -52,7 +58,7 @@ class InvestorController extends Controller
     {
         $bank = Bank::all();
         return view('investor.akunBank', [
-            'bank'  => $bank
+            'bank' => $bank
         ]);
     }
 
@@ -77,14 +83,14 @@ class InvestorController extends Controller
         // dd('masuk sini');
 
         $request->validate([
-        'nama' => 'required|String|max:255',
-        'email' => 'required|String|email|max:255|unique:users',
-        'password' => 'required|String|min:6|confirmed',
-        'jenis_kelamin' => 'required|String',
-        'no_telp' => 'required|String|max:14'
+            'nama' => 'required|String|max:255',
+            'email' => 'required|String|email|max:255|unique:users',
+            'password' => 'required|String|min:6|confirmed',
+            'jenis_kelamin' => 'required|String',
+            'no_telp' => 'required|String|max:14'
         ]);
 
-        $user=User::create([
+        $user = User::create([
             'nama' => $request->nama,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -96,7 +102,8 @@ class InvestorController extends Controller
             'no_telp' => $request->no_telp,
             'id_user' => $user->id,
         ]);
-        return redirect()->route('investor.index')->with('success_msg', 'Data Investor Berhasil dibuat');
+
+        return redirect()->route('beranda')->with('success_msg', 'Data Investor Berhasil dibuat');
     }
 
     /**
@@ -157,5 +164,16 @@ class InvestorController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function tProgres(Request $request, $id)
+    {
+        $pesanan = Pesanan::join('produk', 'pesanan.id_produk', '=', 'produk.id')->join('investor', 'pesanan.id_investor', '=', 'investor.id')->find($id);
+        $progres = Progres::with('pesanan.produk')->where('id_pesanan', $id)->get();
+        // dd($progres);
+        return view('progres.index', [
+            'data' => $pesanan,
+            'progres' => $progres
+        ]);
     }
 }

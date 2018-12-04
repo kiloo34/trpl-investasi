@@ -10,6 +10,9 @@ use App\Pesanan;
 use App\User;
 use App\Bank;
 use Illuminate\Http\Request;
+use App\Kontrak;
+use Illuminate\View\View;
+// use Symfony\Component\HttpFoundation\Request;
 
 class AdminController extends Controller
 {
@@ -128,7 +131,9 @@ class AdminController extends Controller
     public function peternak(){
         $peternak = Peternak::all();
         // dd($investor);
-        return view('admin.peternak', compact('peternak'));
+        return view('admin.peternak', [
+            'peternak' => $peternak
+        ]);
     }
 
     public function produk(){
@@ -158,6 +163,17 @@ class AdminController extends Controller
         return redirect()->route('admin.pesanan')->with('success_msg', 'Pembayaran Pesanan sudah diverifikasi');
     }
 
+    public function verifikasiPembayaranProg(Request $r, $id)
+    {
+        $pesanan = Pesanan::findOrFail($id);
+
+        $pesanan->update([
+            'status' => 'Dana diterukan ke investor'
+        ]);
+
+        return redirect()->route('admin.pesanan')->with('success_msg', 'Pembayaran Pesanan sudah diverifikasi');
+    }
+
     public function lanjutkan(Request $r, $id)
     {
         $pesanan = Pesanan::findOrFail($id);
@@ -178,5 +194,57 @@ class AdminController extends Controller
         ]);
 
         return redirect()->route('admin.pesanan')->with('success_msg', 'Pesanan Dibatalkan');
+    }
+
+    public function batalVerif(Request $r, $id)
+    {
+        $pesanan = Pesanan::findOrFail($id);
+
+        $pesanan->update([
+            'status' => 'Berjalan'
+        ]);
+
+        return redirect()->route('admin.pesanan')->with('success_msg', 'Pesanan Dibatalkan');
+    }
+
+    public function selesai(Request $r, $id)
+    {
+        $pesanan = Pesanan::findOrFail($id);
+
+        $pesanan->update([
+            'status' => 'selesai'
+        ]);
+
+        return redirect()->route('admin.pesanan')->with('success_msg', 'Uang Hasil investasi sudah Diproses investasi telah selesai');
+    }
+
+    public function kontrak()
+    {
+        $kontrak = Kontrak::get();
+
+        return view('admin.kontrak', [
+            'kontrak' => $kontrak
+        ]);
+    }
+
+    public function tambah_kontrak(Request $r)
+    {
+        $r->validate([
+            'kategori' => 'required',
+            'profilResiko' => 'required',
+            'rencanaPengelolaan' => 'required',
+            'struktur' => 'required',
+            'term' => 'required'
+        ]);
+
+        Kontrak::create([
+            'kategori' => $r->kategori,
+            'profilResiko' => $r->profilResiko,
+            'rencanaPengelolaan' => $r->rencanaPengelolaan,
+            'struktur' => $r->struktur,
+            'term' => $r->term
+        ]);
+
+        return redirect()->route('kontrak')->with('succes_msg', 'Data Kontrak dengan Kategori' . $r->kategori . 'berhasil di Tambahkan');
     }
 }

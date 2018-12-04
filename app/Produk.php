@@ -22,19 +22,23 @@ class Produk extends Model
 
     public $timestamp = false;
 
-    public function peternak(){
+    public function peternak()
+    {
         return $this->belongsTo('App\Peternak', 'id_peternak');
     }
 
-    public function pesanan(){
+    public function pesanan()
+    {
         return $this->hasOne('App\Pesanan', 'id_produk');
     }
 
-    public function kontrak(){
+    public function kontrak()
+    {
         return $this->belongsTo('App\Kontrak', 'id_kontrak');
     }
 
-    public function diskusi(){
+    public function diskusi()
+    {
         return $this->hasMany('App\Diskusi', 'id_produk');
     }
 

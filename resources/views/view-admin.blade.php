@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <meta charset="UTF-8">
@@ -13,114 +14,123 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 
     <style>
+        body {
+            font-family: "Lato", sans-serif;
+        }
 
-    body {
-        font-family: "Lato", sans-serif;
-    }
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
 
-    .sidenav {
-        height: 100%;
-        width: 0;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        background-color: #111;
-        overflow-x: hidden;
-        transition: 0.5s;
-        padding-top: 60px;
-    }
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
 
-    .sidenav a {
-        padding: 8px 8px 8px 32px;
-        text-decoration: none;
-        font-size: 25px;
-        color: #818181;
-        display: block;
-        transition: 0.3s;
-    }
+        /* Style the sidenav links and the dropdown button */
 
-    /* Style the sidenav links and the dropdown button */
-    .sidenav a, .dropdown-btn {
-        padding: 6px 8px 6px 16px;
-        text-decoration: none;
-        font-size: 20px;
-        color: #818181;
-        display: block;
-        border: none;
-        background: none;
-        width: 100%;
-        text-align: left;
-        cursor: pointer;
-        outline: none;
-    }
+        .sidenav a,
+        .dropdown-btn {
+            padding: 6px 8px 6px 16px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #818181;
+            display: block;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            outline: none;
+        }
 
-    /* On mouse-over */
-    .sidenav a:hover, .dropdown-btn:hover {
-        color: #f1f1f1;
-    }
+        /* On mouse-over */
 
-    .sidenav a:hover {
-        color: #f1f1f1;
-    }
+        .sidenav a:hover,
+        .dropdown-btn:hover {
+            color: #f1f1f1;
+        }
 
-    .sidenav .closebtn {
-        position: absolute;
-        top: 0;
-        right: -200px;
-        font-size: 36px;
-        margin-left: 50px;
-    }
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
 
-    #main {
-        transition: margin-left .5s;
-        padding: 16px;
-    }
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: -200px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
 
-    .active {
-    background-color: green;
-    color: white;
-    }
+        #main {
+            transition: margin-left .5s;
+            padding: 16px;
+        }
 
-    @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
-    }
+        .active {
+            background-color: green;
+            color: white;
+        }
 
-    .icon-bar {
-        width: 100%;
-        background-color: #555;
-        overflow: auto;
-    }
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
 
-    .icon-bar a {
-        float: left;
-        width: 20%;
-        text-align: center;
-        padding: 12px 0;
-        transition: all 0.3s ease;
-        color: white;
-        font-size: 36px;
-    }
+        .icon-bar {
+            width: 100%;
+            background-color: #555;
+            overflow: auto;
+        }
 
-    .icon-bar a:hover {
-        background-color: #000;
-    }
+        .icon-bar a {
+            float: left;
+            width: 20%;
+            text-align: center;
+            padding: 12px 0;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 36px;
+        }
 
-    .dropdown-container {
-    display: none;
-    background-color: #262626;
-    padding-left: 8px;
-    }
+        .icon-bar a:hover {
+            background-color: #000;
+        }
 
-    /* Optional: Style the caret down icon */
-    .fa-caret-down {
-    float: right;
-    padding-right: 8px;
-    }
+        .dropdown-container {
+            display: none;
+            background-color: #262626;
+            padding-left: 8px;
+        }
+
+        /* Optional: Style the caret down icon */
+
+        .fa-caret-down {
+            float: right;
+            padding-right: 8px;
+        }
     </style>
 
 </head>
+
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
@@ -144,7 +154,8 @@
                     <i class="fa fa-user" aria-hidden="true"></i>
                     Peternak</a>
             </div>
-            <a href="{{ route('logout') }}"onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+            <a href="{{route('admin.kontrak')}}"><i class="fa fa-pencil-square" aria-hidden="true"></i> Kontrak Produk</a>
+            <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 {{ csrf_field() }}
             </form>
@@ -160,9 +171,11 @@
     </div>
 
 
-    <script src="{{ asset('js/app.js') }}" > </script>
+    <script src="{{ asset('js/app.js') }}">
+
+    </script>
     <script>
-    function openNav() {
+        function openNav() {
         document.getElementById("mySidenav").style.width = "250px";
         document.getElementById("main").style.marginLeft = "250px";
     }
@@ -192,4 +205,5 @@
 
 
 </body>
+
 </html>

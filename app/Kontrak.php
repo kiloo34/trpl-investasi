@@ -9,6 +9,7 @@ class Kontrak extends Model
     protected $table = 'kontrak';
 
     protected $fillable = [
+        'kategori',
         'profilResiko',
         'rencanaPengelolaan',
         'struktur',

@@ -63,7 +63,7 @@
                     </form>
 
                     <li class="nav-item">
-                        <a class="nav-link" href=""> <i class="fa fa-bell-o" aria-hidden="true"></i> Notifikasi <span class="badge badge-light">{{Auth::user()->notifikasi->count()}}</span></a>
+                        <a class="nav-link" href="{{ route('notifikasi') }}"> <i class="fa fa-bell-o" aria-hidden="true"></i> Notifikasi <span class="badge badge-light">{{Auth::user()->notifikasi->where('seen', 0)->count()}}</span></a>
                     </li>
 
                     @elseif(Auth::user()->role=='peternak')
@@ -91,7 +91,7 @@
                     </form>
 
                     <li class="nav-item">
-                        <a class="nav-link" href=""> <i class="fa fa-bell-o" aria-hidden="true"></i> Notifikasi <span class="badge badge-light">{{Auth::user()->notifikasi->count()}}</span></a>
+                        <a class="nav-link" href="{{ route('notifikasi') }}"> <i class="fa fa-bell-o" aria-hidden="true"></i> Notifikasi <span class="badge badge-light">{{Auth::user()->notifikasi->where('seen', 0)->count()}}</span></a>
                     </li>
                 </li>
                 @else

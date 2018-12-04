@@ -46,9 +46,16 @@
                                 <a href="{{ route('admin.lanjutkan', $d->id) }}" class="btn btn-flat btn-primary btn-sm"><i class="fa fa-check" aria-hidden="true"></i> Lanjutkan</a>
                             @endif
                             @if ($d->status == 'Berjalan')
-                                <a href="" class="btn btn-flat btn-success btn-sm"><i class="fa fa-check" aria-hidden="true"></i> Lanjutkan</a>
+                                <span class="badge badge-pill badge-primary"> Menunggu Pembayaran dari peternak </span>
                             @endif
                             {{-- <a href="{{route ('produk.destroy', $d->id) }}" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a> --}}
+                            @if ($d->status == 'Menunggu Verifikasi Admin')
+                                <a href="{{ route('admin.verifikasiPembayaranProg', $d->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-money" aria-hidden="true"></i> Verifikasi</a>
+                                <a href="{{ route('admin.batalVerif', $d->id) }}" class="btn btn-danger btn-sm"><i class="fa fa-ban" aria-hidden="true"></i> Batalkan </a>
+                            @endif
+                            @if ($d->status == 'Dana diterukan ke investor')
+                                <a href="{{ route('admin.selesai', $d->id) }}" class="btn btn-flat btn-primary btn-sm"><i class="fa fa-check" aria-hidden="true"></i> Selesai</a>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

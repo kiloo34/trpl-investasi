@@ -15,10 +15,13 @@ class CreateKontrakTable extends Migration
     {
         Schema::create('kontrak', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('profilResiko');
-            $table->text('rencanaPengelolaan');
-            $table->text('struktur');
-            $table->text('term');
+            $table->string('kategori');
+            $table->text('profilResiko')->nullable();
+            $table->text('rencanaPengelolaan')->nullable();
+            $table->text('struktur')->nullable();
+            $table->text('term')->nullable();
+            $table->String('roia')->nullable();
+            $table->String('roib')->nullable();
             $table->timestamps();
         });
     }

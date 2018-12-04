@@ -67,6 +67,7 @@
                         <form action="{{ route('order.store', $produk->id) }}" method="post">
                             {{ csrf_field() }}
                             <h3 class="box-title">Complete your Order</h3>
+                            {{-- {{dd($produk)}} --}}
                             <div class="plan-selection">
                                 <div class="plan-data">
                                     <img class="img-fluid" src="{{ $produk->foto_produk }}" alt="Card image cap" style="max-height: 160px;">
@@ -115,29 +116,9 @@
                                     <input name="total" placeholder="{{$produk->harga}}" class="form-control" readonly id="total">
                                 </span>
                             </div>
-                            <div class="form-group">
-                                <label for="total" class="control-label">{{__('Metode Pembayaran')}}:</label>
-                                @foreach ($saldo as $s)
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="transfer" name="pembayaran" value="transfer" class="custom-control-input">
-                                        <label class="custom-control-label" for="transfer">Transfer</label>
-                                        <input type="hidden" name="status" value="Menunggu Pembayaran">
-                                    </div>
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="saldo" name="pembayaran" value="saldo" class="custom-control-input">
-                                        <label class="custom-control-label" value="{{$s->saldo}}"  for="saldo">Saldo</label>
-                                        <input type="hidden" name="id_saldo" value="{{ $s->id }}">
-                                        <input type="hidden" name="status" value="Dalam Proses">
-                                    </div>
-                                @endforeach
-                            </div>
+                            <input type="hidden" name="id_user" value="">
                             <button type="submit" action="{{ route('order.store') }}" class="btn btn-default" id="btn_beli">Beli</button>
                         </form>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                    <div class="box">
-
                     </div>
                 </div>
             </div>
@@ -174,20 +155,4 @@
             }
         }
     </script>
-{{--
-    <script type="text/javascript">
-
-        saldo = parseInt($('#saldo').val());
-        total = parseInt($('#total').val());
-
-        ready(function() {
-            $('#btn_beli').on('click', function(e) {
-                e.preventDefault();
-                if (total > saldo) {
-                    alert('Saldo anda tidak Mencukupi Untuk Melakukan Pemesanan Slot ini \n Coba Pilih Metode Pembayaran yang lain')
-                    window.location.reload();
-                }
-            })
-        })
-    </script> --}}
 @endpush
